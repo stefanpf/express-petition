@@ -6,3 +6,8 @@
 body {
     background-color: hotpink;
 }
+
+canvas {
+    border: 3px solid antiquewhite;
+    margin-left: 300px;
+}
