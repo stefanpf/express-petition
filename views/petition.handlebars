@@ -1,0 +1,13 @@
+<form action="" method="post">
+    <label for="fistName">First Name</label>
+    <input type="text" name="firstName" id="firstName" />
+    <label for="lastName">Last Name</label>
+    <input type="text" name="lastName" id="lastName" />
+    <label for="signature">Signature</label>
+    <input type="text" name="signature" id="signature" />
+    <button type="submit">Sign Petition</button>
+</form>
+
+{{#if addSignatureError}}<h2>Uh oh, there was a problem, please try again...</h2>{{/if}}
+
+<script src="script.js"></script>

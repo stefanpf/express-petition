@@ -1,0 +1,10 @@
+<h1>LOOK AT ALL THE SIGNERS</h1>
+<ul>
+    {{#signers}}
+        <li>{{this.first}} {{this.last}}</li>
+    {{/signers}}
+</ul>
+<p>
+    Total number of signatures:
+    {{numberOfSignatures}}
+</p>
