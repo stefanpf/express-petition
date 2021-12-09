@@ -16,7 +16,8 @@
 
     canvas.addEventListener("mousemove", (evt) => {
         if (drawing) {
-            context.strokeStyle = "blue";
+            context.strokeStyle = "white";
+            context.lineWidth = 5;
             context.beginPath();
             context.moveTo(
                 evt.pageX - evt.currentTarget.offsetLeft,
@@ -27,8 +28,8 @@
                 evt.pageY - evt.currentTarget.offsetTop
             );
             context.lineTo(
-                evt.pageX - evt.currentTarget.offsetLeft,
-                evt.pageY - evt.currentTarget.offsetTop
+                evt.pageX - evt.currentTarget.offsetLeft + 1,
+                evt.pageY - evt.currentTarget.offsetTop + 1
             );
             context.stroke();
         }
