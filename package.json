@@ -10,7 +10,7 @@
     "engines": {
         "node": "14.15.1"
     },
-    "author": "",
+    "author": "Stefan Pfeuffer",
     "license": "ISC",
     "dependencies": {
         "bcryptjs": "^2.4.3",
