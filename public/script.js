@@ -23,10 +23,6 @@
                 evt.pageX - evt.currentTarget.offsetLeft,
                 evt.pageY - evt.currentTarget.offsetTop
             );
-            console.log(
-                evt.pageX - evt.currentTarget.offsetLeft,
-                evt.pageY - evt.currentTarget.offsetTop
-            );
             context.lineTo(
                 evt.pageX - evt.currentTarget.offsetLeft + 1,
                 evt.pageY - evt.currentTarget.offsetTop + 1
