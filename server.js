@@ -38,8 +38,11 @@ app.route("/petition")
     .post((req, res) => {
         const { firstName, lastName, signature } = req.body;
         db.addSignature(firstName, lastName, signature)
-            .then(() => {
-                req.session.hasSigned = true;
+            .then(({ rows }) => {
+                req.session = {
+                    hasSigned: true,
+                    signatureId: rows[0].id,
+                };
                 res.redirect("/thanks");
             })
             .catch((err) => {
@@ -50,15 +53,23 @@ app.route("/petition")
 
 app.get("/thanks", (req, res) => {
     if (req.session.hasSigned) {
+        let numberOfSignatures;
+        const { signatureId } = req.session;
+
         db.getNumberOfSignatures()
             .then(({ rows }) => {
-                const numberOfSignatures = rows[0].count;
+                numberOfSignatures = rows[0].count;
+                return db.getSignature(signatureId);
+            })
+            .catch((err) => console.log("Err in getNumberOfSignatures:", err))
+            .then(({ rows }) => {
                 res.render("thanks", {
                     numberOfSignatures,
+                    signature: rows[0].signature,
                 });
             })
             .catch((err) => {
-                console.log("Err in getNumberOfSignatures:", err);
+                console.log("Err in getSignature", err);
                 res.render("thanks");
             });
     } else {
