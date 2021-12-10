@@ -1,6 +1,6 @@
 const db = require("./db");
 
-module.exports.postPetition = function (req, res) {
+function postPetition(req, res) {
     const { firstName, lastName, signature } = req.body;
     db.addSignature(firstName, lastName, signature)
         .then(({ rows }) => {
@@ -14,9 +14,9 @@ module.exports.postPetition = function (req, res) {
             console.log("Err in addSignature:", err);
             res.render("petition", { addSignatureError: true });
         });
-};
+}
 
-module.exports.getSigners = function (req, res) {
+function getSigners(req, res) {
     let signers, numberOfSignatures;
 
     db.getSigners()
@@ -30,9 +30,9 @@ module.exports.getSigners = function (req, res) {
             res.render("signers", { signers, numberOfSignatures });
         })
         .catch((err) => console.log("Err in getNumberOfSignatures:", err));
-};
+}
 
-module.exports.getThanks = function (req, res) {
+function getThanks(req, res) {
     let numberOfSignatures;
     const { signatureId } = req.session;
 
@@ -52,4 +52,10 @@ module.exports.getThanks = function (req, res) {
             console.log("Err in getSignature", err);
             res.render("thanks");
         });
+}
+
+module.exports = {
+    postPetition,
+    getSigners,
+    getThanks,
 };

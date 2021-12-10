@@ -7,23 +7,30 @@ const db = psql(
 
 console.log(`[db] connecting to: ${DATABASE}`);
 
-module.exports.getSigners = () => {
+function getSigners() {
     return db.query("SELECT first, last FROM signatures");
-};
+}
 
-module.exports.getNumberOfSignatures = () => {
+function getNumberOfSignatures() {
     return db.query("SELECT COUNT(*) FROM signatures");
-};
+}
 
-module.exports.getSignature = (signatureId) => {
+function getSignature(signatureId) {
     const q = `SELECT signature FROM signatures WHERE id = $1`;
     const params = [signatureId];
     return db.query(q, params);
-};
+}
 
-module.exports.addSignature = (firstName, lastName, signature) => {
+function addSignature(firstName, lastName, signature) {
     const q = `INSERT INTO signatures (first, last, signature) 
             VALUES ($1, $2, $3) RETURNING id`;
     const params = [firstName, lastName, signature];
     return db.query(q, params);
+}
+
+module.exports = {
+    getSigners,
+    getNumberOfSignatures,
+    getSignature,
+    addSignature,
 };

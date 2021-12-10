@@ -28,8 +28,8 @@
     });
 
     function updateCoordinates(coordinates, evt) {
-        coordinates[0] = evt.pageX - evt.currentTarget.offsetLeft; // evt.offsetLeft
-        coordinates[1] = evt.pageY - evt.currentTarget.offsetTop; // evt.offsetTop
+        coordinates[0] = evt.pageX - evt.currentTarget.offsetLeft;
+        coordinates[1] = evt.pageY - evt.currentTarget.offsetTop;
         return coordinates;
     }
 })();
