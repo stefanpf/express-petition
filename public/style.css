@@ -7,7 +7,42 @@ body {
     background-color: hotpink;
 }
 
+.petition-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.petition-inner-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+}
+
+#petition-form {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#petition-form input[type="text"] {
+    border-radius: 5px;
+    font-size: 1.3em;
+    height: 2em;
+    margin: 10px 10px;
+    padding: 5px 10px;
+}
+
+#petition-form button {
+    height: 2em;
+    width: 70%;
+    font-size: 2em;
+    align-self: center;
+}
+
 canvas {
     border: 3px solid antiquewhite;
-    margin-left: 300px;
+    border-radius: 5px;
+    margin: 20px 0;
 }
