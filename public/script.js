@@ -1,10 +1,12 @@
 (function () {
     let signatureField = document.getElementById("signature");
     let drawing = false;
+    let coordinates = [0, 0];
     const canvas = document.getElementById("canv");
     let context = canvas.getContext("2d");
 
-    canvas.addEventListener("mousedown", () => {
+    canvas.addEventListener("mousedown", (evt) => {
+        coordinates = updateCoordinates(coordinates, evt);
         drawing = true;
     });
 
@@ -17,17 +19,18 @@
     canvas.addEventListener("mousemove", (evt) => {
         if (drawing) {
             context.strokeStyle = "white";
-            context.lineWidth = 5;
+            context.lineWidth = 3;
             context.beginPath();
-            context.moveTo(
-                evt.pageX - evt.currentTarget.offsetLeft,
-                evt.pageY - evt.currentTarget.offsetTop
-            );
-            context.lineTo(
-                evt.pageX - evt.currentTarget.offsetLeft + 1,
-                evt.pageY - evt.currentTarget.offsetTop + 1
-            );
+            context.moveTo(coordinates[0], coordinates[1]);
+            coordinates = updateCoordinates(coordinates, evt);
+            context.lineTo(coordinates[0], coordinates[1]);
             context.stroke();
         }
     });
+
+    function updateCoordinates(coordinates, evt) {
+        coordinates[0] = evt.pageX - evt.currentTarget.offsetLeft;
+        coordinates[1] = evt.pageY - evt.currentTarget.offsetTop;
+        return coordinates;
+    }
 })();
