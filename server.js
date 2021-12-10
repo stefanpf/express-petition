@@ -4,6 +4,7 @@ const { engine } = require("express-handlebars");
 const { logUrl } = require("./helperFunctions");
 const { COOKIE_SESSION_SECRET } = require("./secrets.json");
 const db = require("./db");
+const routes = require("./handleRoutes");
 const app = express();
 const PORT = 8080;
 
@@ -36,42 +37,12 @@ app.route("/petition")
         }
     })
     .post((req, res) => {
-        const { firstName, lastName, signature } = req.body;
-        db.addSignature(firstName, lastName, signature)
-            .then(({ rows }) => {
-                req.session = {
-                    hasSigned: true,
-                    signatureId: rows[0].id,
-                };
-                res.redirect("/thanks");
-            })
-            .catch((err) => {
-                console.log("Err in addSignature:", err);
-                res.render("petition", { addSignatureError: true });
-            });
+        routes.postPetition(req, res);
     });
 
 app.get("/thanks", (req, res) => {
     if (req.session.hasSigned) {
-        let numberOfSignatures;
-        const { signatureId } = req.session;
-
-        db.getNumberOfSignatures()
-            .then(({ rows }) => {
-                numberOfSignatures = rows[0].count;
-                return db.getSignature(signatureId);
-            })
-            .catch((err) => console.log("Err in getNumberOfSignatures:", err))
-            .then(({ rows }) => {
-                res.render("thanks", {
-                    numberOfSignatures,
-                    signature: rows[0].signature,
-                });
-            })
-            .catch((err) => {
-                console.log("Err in getSignature", err);
-                res.render("thanks");
-            });
+        routes.getThanks(req, res);
     } else {
         res.redirect("/petition");
     }
@@ -79,19 +50,7 @@ app.get("/thanks", (req, res) => {
 
 app.get("/signers", (req, res) => {
     if (req.session.hasSigned) {
-        let signers, numberOfSignatures;
-
-        db.getSigners()
-            .then(({ rows }) => {
-                signers = rows;
-                return db.getNumberOfSignatures();
-            })
-            .catch((err) => console.log("Err in getSigners:", err))
-            .then(({ rows }) => {
-                numberOfSignatures = rows[0].count;
-                res.render("signers", { signers, numberOfSignatures });
-            })
-            .catch((err) => console.log("Err in getNumberOfSignatures:", err));
+        routes.getSigners(req, res);
     } else {
         res.redirect("/petition");
     }
