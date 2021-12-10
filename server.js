@@ -24,7 +24,7 @@ app.use(
 app.use(express.static("./public"));
 
 // ROUTES
-app.route("/").get((req, res) => {
+app.get("/", (req, res) => {
     res.redirect("/petition");
 });
 
