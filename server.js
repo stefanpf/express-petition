@@ -3,7 +3,6 @@ const cookieSession = require("cookie-session");
 const { engine } = require("express-handlebars");
 const { logUrl } = require("./helperFunctions");
 const { COOKIE_SESSION_SECRET } = require("./secrets.json");
-const db = require("./db");
 const routes = require("./handleRoutes");
 const app = express();
 const PORT = 8080;
