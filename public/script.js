@@ -12,7 +12,6 @@
 
     canvas.addEventListener("mouseup", () => {
         signatureField.value = canvas.toDataURL();
-        console.log(signatureField.value);
         drawing = false;
     });
 
