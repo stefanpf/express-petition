@@ -1,5 +1,6 @@
 const express = require("express");
 const cookieSession = require("cookie-session");
+const helmet = require("helmet");
 const { engine } = require("express-handlebars");
 const { logUrl } = require("./helperFunctions");
 const { COOKIE_SESSION_SECRET } = require("./secrets.json");
@@ -18,9 +19,15 @@ app.use(
     cookieSession({
         secret: COOKIE_SESSION_SECRET,
         maxAge: 1000 * 60 * 60 * 24 * 14,
+        sameSite: true,
     })
 );
+app.use((req, res, next) => {
+    res.setHeader("x-frame-options", "deny");
+    next();
+});
 app.use(express.static("./public"));
+app.use(helmet());
 
 // ROUTES
 app.get("/", (req, res) => {
