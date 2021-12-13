@@ -59,7 +59,9 @@ app.route("/petition")
     .post((req, res) => routes.postPetition(req, res));
 
 app.get("/thanks", (req, res) => {
-    if (req.session.hasSigned) {
+    if (!req.session.userId) {
+        res.redirect("/login");
+    } else if (req.session.hasSigned) {
         routes.getThanks(req, res);
     } else {
         res.redirect("/petition");
@@ -67,7 +69,9 @@ app.get("/thanks", (req, res) => {
 });
 
 app.get("/signers", (req, res) => {
-    if (req.session.hasSigned) {
+    if (!req.session.userId) {
+        res.redirect("/login");
+    } else if (req.session.hasSigned) {
         routes.getSigners(req, res);
     } else {
         res.redirect("/petition");

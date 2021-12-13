@@ -27,7 +27,6 @@ function postLogin(req, res) {
         })
         .then((passwordCorrect) => {
             if (passwordCorrect) {
-                req.session.userId = userId;
                 return db.getSignatureIdByUserId(userId);
             } else {
                 throw new Error(
@@ -37,9 +36,11 @@ function postLogin(req, res) {
         })
         .then(({ rows }) => {
             if (rows.length === 0) {
+                req.session.userId = userId;
                 res.redirect("/petition");
             } else {
                 req.session = {
+                    userId,
                     hasSigned: true,
                     signatureId: rows[0].id,
                 };
@@ -58,6 +59,7 @@ function postPetition(req, res) {
     db.addSignature(userId, signature)
         .then(({ rows }) => {
             req.session = {
+                userId,
                 hasSigned: true,
                 signatureId: rows[0].id,
             };
