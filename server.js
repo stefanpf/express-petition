@@ -34,6 +34,20 @@ app.get("/", (req, res) => {
     res.redirect("/petition");
 });
 
+app.route("/register")
+    .get((req, res) => res.render("register"))
+    .post((req, res) => {
+        console.log("POST request on /register");
+        res.sendStatus(200);
+    });
+
+app.route("/login")
+    .get((req, res) => res.render("login"))
+    .post((req, res) => {
+        console.log("POST request to /login");
+        res.sendStatus(200);
+    });
+
 app.route("/petition")
     .get((req, res) => {
         if (req.session.hasSigned) {

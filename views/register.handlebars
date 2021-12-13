@@ -1,0 +1,26 @@
+<div class="register-wrapper">
+    <div class="register-inner-wrap">
+        <div class="register-description">
+            <p>What do we want? Everything! When do we want it? Now!</p>
+            <ul>
+                <li>More energy!</li>
+                <li>More Gute Laune!</li>
+                <li>Less boredom!</li>
+            </ul>
+        </div>
+        <form action="" method="post" id="register-form">
+            <label for="firstName">First Name</label>
+            <input type="text" name="firstName" id="firstName" required /><br />
+            <label for="lastName">Last Name</label>
+            <input type="text" name="lastName" id="lastName" required /><br />
+            <label for="email">Email Address</label>
+            <input type="text" name="email" id="email" required /><br />
+            <label for="password">Password</label>
+            <input type="text" name="password" id="password" required /><br />
+            <button type="submit">Register Account</button>
+        </form>
+        {{#if registrationError}}<h2>Uh oh, there was a problem, please try
+                again...</h2>{{/if}}
+    </div>
+
+</div>
