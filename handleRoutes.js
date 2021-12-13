@@ -17,7 +17,7 @@ function postPetition(req, res) {
 }
 
 function getSigners(req, res) {
-    let signers, numberOfSignatures;
+    let signers;
 
     db.getSigners()
         .then(({ rows }) => {
@@ -26,8 +26,10 @@ function getSigners(req, res) {
         })
         .catch((err) => console.log("Err in getSigners:", err))
         .then(({ rows }) => {
-            numberOfSignatures = rows[0].count;
-            res.render("signers", { signers, numberOfSignatures });
+            res.render("signers", {
+                signers,
+                numberOfSignatures: rows[0].count,
+            });
         })
         .catch((err) => console.log("Err in getNumberOfSignatures:", err));
 }
