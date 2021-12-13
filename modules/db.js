@@ -8,11 +8,19 @@ const db = psql(
 console.log(`[db] connecting to: ${DATABASE}`);
 
 function getSigners() {
-    return db.query("SELECT first, last FROM signatures");
+    return db.query(
+        "SELECT users.first, users.last FROM users INNER JOIN signatures ON users.id = signatures.user_id"
+    );
 }
 
 function getNumberOfSignatures() {
     return db.query("SELECT COUNT(*) FROM signatures");
+}
+
+function getSignatureIdByUserId(userId) {
+    const q = `SELECT id FROM signatures WHERE user_id = $1`;
+    const params = [userId];
+    return db.query(q, params);
 }
 
 function getSignature(signatureId) {
@@ -35,9 +43,9 @@ function addUser(firstName, lastName, email, hashedPw) {
     return db.query(q, params);
 }
 
-function getUser(email, password) {
-    const q = `SELECT id FROM users WHERE email = $1 AND password = $2`;
-    const params = [email, password];
+function getUser(email) {
+    const q = `SELECT id, password FROM users WHERE email = $1`;
+    const params = [email];
     return db.query(q, params);
 }
 
@@ -45,6 +53,7 @@ module.exports = {
     getSigners,
     getNumberOfSignatures,
     getSignature,
+    getSignatureIdByUserId,
     addSignature,
     addUser,
     getUser,

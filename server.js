@@ -31,7 +31,11 @@ app.use(helmet());
 
 // ROUTES
 app.get("/", (req, res) => {
-    res.redirect("/petition");
+    if (req.session.userId) {
+        res.redirect("/petition");
+    } else {
+        res.redirect("/login");
+    }
 });
 
 app.route("/register")
@@ -44,7 +48,9 @@ app.route("/login")
 
 app.route("/petition")
     .get((req, res) => {
-        if (req.session.hasSigned) {
+        if (!req.session.userId) {
+            res.redirect("/login");
+        } else if (req.session.hasSigned) {
             res.redirect("/thanks");
         } else {
             res.render("petition");

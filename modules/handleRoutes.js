@@ -2,16 +2,60 @@ const db = require("./db");
 const { compare, hash } = require("./bc");
 
 function postRegister(req, res) {
-    res.sendStatus(200);
+    const { firstName, lastName, email, password } = req.body;
+    hash(password)
+        .then((hashedPassword) => {
+            return db.addUser(firstName, lastName, email, hashedPassword);
+        })
+        .then(({ rows }) => {
+            req.session.userId = rows[0].id;
+            res.redirect("/petition");
+        })
+        .catch((err) => {
+            console.log("Err in addUser:", err);
+            res.render("register", { registrationError: true });
+        });
 }
 
 function postLogin(req, res) {
-    res.sendStatus(200);
+    const { email, password: typedPassword } = req.body;
+    let userId;
+    db.getUser(email)
+        .then(({ rows }) => {
+            userId = rows[0].id;
+            return compare(typedPassword, rows[0].password);
+        })
+        .then((passwordCorrect) => {
+            if (passwordCorrect) {
+                req.session.userId = userId;
+                return db.getSignatureIdByUserId(userId);
+            } else {
+                throw new Error(
+                    `Incorrect password attempt on /login for user ${email}`
+                );
+            }
+        })
+        .then(({ rows }) => {
+            if (rows.length === 0) {
+                res.redirect("/petition");
+            } else {
+                req.session = {
+                    hasSigned: true,
+                    signatureId: rows[0].id,
+                };
+                res.redirect("/thanks");
+            }
+        })
+        .catch((err) => {
+            console.log("Err in getUser:", err);
+            res.render("login", { loginError: true });
+        });
 }
 
 function postPetition(req, res) {
-    const { firstName, lastName, signature } = req.body;
-    db.addSignature(firstName, lastName, signature)
+    const { signature } = req.body;
+    const { userId } = req.session;
+    db.addSignature(userId, signature)
         .then(({ rows }) => {
             req.session = {
                 hasSigned: true,
