@@ -2,9 +2,9 @@ const express = require("express");
 const cookieSession = require("cookie-session");
 const helmet = require("helmet");
 const { engine } = require("express-handlebars");
-const { logUrl } = require("./helperFunctions");
+const { logUrl } = require("./modules/helperFunctions");
 const { COOKIE_SESSION_SECRET } = require("./secrets.json");
-const routes = require("./handleRoutes");
+const routes = require("./modules/handleRoutes");
 const app = express();
 const PORT = 8080;
 

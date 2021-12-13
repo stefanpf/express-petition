@@ -1,4 +1,4 @@
-const { DATABASE, DB_USERNAME, DB_PASSWORD } = require("./secrets.json");
+const { DATABASE, DB_USERNAME, DB_PASSWORD } = require("../secrets.json");
 const psql = require("spiced-pg");
 
 const db = psql(

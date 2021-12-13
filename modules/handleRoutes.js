@@ -1,4 +1,5 @@
 const db = require("./db");
+const { compare, hash } = require("./bc");
 
 function postPetition(req, res) {
     const { firstName, lastName, signature } = req.body;
