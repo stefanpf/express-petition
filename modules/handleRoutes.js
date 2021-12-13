@@ -5,12 +5,7 @@ function postRegister(req, res) {
     const { firstName, lastName, email, password } = req.body;
     hash(password)
         .then((hashedPassword) => {
-            return db.addUser(
-                firstName,
-                lastName,
-                email.toLowerCase(),
-                hashedPassword
-            );
+            return db.addUser(firstName, lastName, email, hashedPassword);
         })
         .then(({ rows }) => {
             req.session.userId = rows[0].id;
@@ -25,7 +20,7 @@ function postRegister(req, res) {
 function postLogin(req, res) {
     const { email, password: typedPassword } = req.body;
     let userId;
-    db.getUser(email.toLowerCase())
+    db.getUser(email)
         .then(({ rows }) => {
             userId = rows[0].id;
             return compare(typedPassword, rows[0].password);
