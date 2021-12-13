@@ -21,10 +21,23 @@ function getSignature(signatureId) {
     return db.query(q, params);
 }
 
-function addSignature(firstName, lastName, signature) {
-    const q = `INSERT INTO signatures (first, last, signature) 
-            VALUES ($1, $2, $3) RETURNING id`;
-    const params = [firstName, lastName, signature];
+function addSignature(userId, signature) {
+    const q = `INSERT INTO signatures (user_id, signature) 
+            VALUES ($1, $2) RETURNING id`;
+    const params = [userId, signature];
+    return db.query(q, params);
+}
+
+function addUser(firstName, lastName, email, hashedPw) {
+    const q = `INSERT INTO users (first, last, email, password)
+            VALUES ($1, $2, $3, $4) RETURNING id`;
+    const params = [firstName, lastName, email, hashedPw];
+    return db.query(q, params);
+}
+
+function getUser(email, password) {
+    const q = `SELECT id FROM users WHERE email = $1 AND password = $2`;
+    const params = [email, password];
     return db.query(q, params);
 }
 
@@ -33,4 +46,6 @@ module.exports = {
     getNumberOfSignatures,
     getSignature,
     addSignature,
+    addUser,
+    getUser,
 };
