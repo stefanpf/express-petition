@@ -1,6 +1,14 @@
 const db = require("./db");
 const { compare, hash } = require("./bc");
 
+function postRegister(req, res) {
+    res.sendStatus(200);
+}
+
+function postLogin(req, res) {
+    res.sendStatus(200);
+}
+
 function postPetition(req, res) {
     const { firstName, lastName, signature } = req.body;
     db.addSignature(firstName, lastName, signature)
@@ -58,6 +66,8 @@ function getThanks(req, res) {
 }
 
 module.exports = {
+    postRegister,
+    postLogin,
     postPetition,
     getSigners,
     getThanks,

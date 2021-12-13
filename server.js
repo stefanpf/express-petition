@@ -36,17 +36,11 @@ app.get("/", (req, res) => {
 
 app.route("/register")
     .get((req, res) => res.render("register"))
-    .post((req, res) => {
-        console.log("POST request on /register");
-        res.sendStatus(200);
-    });
+    .post((req, res) => routes.postRegister(req, res));
 
 app.route("/login")
     .get((req, res) => res.render("login"))
-    .post((req, res) => {
-        console.log("POST request to /login");
-        res.sendStatus(200);
-    });
+    .post((req, res) => routes.postLogin(req, res));
 
 app.route("/petition")
     .get((req, res) => {
@@ -56,9 +50,7 @@ app.route("/petition")
             res.render("petition");
         }
     })
-    .post((req, res) => {
-        routes.postPetition(req, res);
-    });
+    .post((req, res) => routes.postPetition(req, res));
 
 app.get("/thanks", (req, res) => {
     if (req.session.hasSigned) {
