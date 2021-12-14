@@ -38,6 +38,10 @@ app.route("/register")
     .get((req, res) => res.render("register"))
     .post((req, res) => routes.postRegister(req, res));
 
+app.route("/profile")
+    .get((req, res) => res.render("profile"))
+    .post((req, res) => routes.postProfile(req, res));
+
 app.route("/login")
     .get((req, res) => res.render("login"))
     .post((req, res) => routes.postLogin(req, res));
