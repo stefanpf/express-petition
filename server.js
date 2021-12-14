@@ -68,6 +68,10 @@ app.get("/signers", requireLoggedInUser, (req, res) => {
     }
 });
 
+app.get("/logout", requireLoggedInUser, (req, res) => {
+    routes.getLogout(req, res);
+});
+
 app.listen(
     process.env.PORT || PORT,
     console.log(`Petition server listening on port ${PORT}`)

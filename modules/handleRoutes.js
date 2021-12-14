@@ -15,7 +15,10 @@ function postRegister(req, res) {
                 );
             })
             .then(({ rows }) => {
-                req.session.userId = rows[0].id;
+                req.session = {
+                    userId: rows[0].id,
+                    loggedIn: true,
+                };
                 res.redirect("/petition");
             })
             .catch((err) => {
@@ -46,13 +49,17 @@ function postLogin(req, res) {
         })
         .then(({ rows }) => {
             if (rows.length === 0) {
-                req.session.userId = userId;
+                req.session = {
+                    userId,
+                    loggedIn: true,
+                };
                 res.redirect("/petition");
             } else {
                 req.session = {
                     userId,
                     hasSigned: true,
                     signatureId: rows[0].id,
+                    loggedIn: true,
                 };
                 res.redirect("/thanks");
             }
@@ -72,6 +79,7 @@ function postPetition(req, res) {
                 userId,
                 hasSigned: true,
                 signatureId: rows[0].id,
+                loggedIn: true,
             };
             res.redirect("/thanks");
         })
@@ -94,6 +102,7 @@ function getSigners(req, res) {
             res.render("signers", {
                 signers,
                 numberOfSignatures: rows[0].count,
+                loggedIn: true,
             });
         })
         .catch((err) => console.log("Err in getNumberOfSignatures:", err));
@@ -113,6 +122,7 @@ function getThanks(req, res) {
             res.render("thanks", {
                 numberOfSignatures,
                 signature: rows[0].signature,
+                loggedIn: true,
             });
         })
         .catch((err) => {
@@ -121,10 +131,16 @@ function getThanks(req, res) {
         });
 }
 
+function getLogout(req, res) {
+    req.session.userId = "";
+    res.redirect("/");
+}
+
 module.exports = {
     postRegister,
     postLogin,
     postPetition,
     getSigners,
     getThanks,
+    getLogout,
 };
