@@ -39,7 +39,9 @@ app.route("/register")
     .post((req, res) => routes.postRegister(req, res));
 
 app.route("/profile")
-    .get(requireLoggedInUser, (req, res) => res.render("profile"))
+    .get(requireLoggedInUser, (req, res) =>
+        res.render("profile", { loggedIn: true })
+    )
     .post((req, res) => routes.postProfile(req, res));
 
 app.route("/login")
@@ -51,7 +53,7 @@ app.route("/petition")
         if (req.session.hasSigned) {
             res.redirect("/thanks");
         } else {
-            res.render("petition");
+            res.render("petition", { loggedIn: true });
         }
     })
     .post((req, res) => routes.postPetition(req, res));

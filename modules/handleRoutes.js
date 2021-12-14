@@ -16,7 +16,6 @@ function postRegister(req, res) {
         .then(({ rows }) => {
             req.session = {
                 userId: rows[0].id,
-                loggedIn: true,
             };
             res.redirect("/profile");
         })
@@ -33,7 +32,6 @@ function postProfile(req, res) {
     if (!age && !city && !url) {
         req.session = {
             userId,
-            loggedIn: true,
         };
         res.redirect("/petition");
     } else {
@@ -41,13 +39,12 @@ function postProfile(req, res) {
             .then(() => {
                 req.session = {
                     userId,
-                    loggedIn: true,
                 };
                 res.redirect("/petition");
             })
             .catch((err) => {
                 console.log("Err in addProfile:", err);
-                res.render("profile", { profileError: true });
+                res.render("profile", { loggedIn: true, profileError: true });
             });
     }
 }
@@ -68,14 +65,13 @@ function postLogin(req, res) {
                         userId,
                         signatureId,
                         hasSigned: true,
-                        loggedIn: true,
                     };
                     res.redirect("/thanks");
                 } else {
                     req.session = {
                         userId,
-                        loggedIn: true,
                     };
+                    res.redirect("/petition");
                 }
             } else {
                 throw new Error(
@@ -83,32 +79,6 @@ function postLogin(req, res) {
                 );
             }
         })
-        // .then((passwordCorrect) => {
-        //     if (passwordCorrect) {
-        //         return db.getSignatureIdByUserId(userId);
-        //     } else {
-        //         throw new Error(
-        //             `Incorrect password attempt on /login for user ${email}`
-        //         );
-        //     }
-        // })
-        // .then(({ rows }) => {
-        //     if (rows.length === 0) {
-        //         req.session = {
-        //             userId,
-        //             loggedIn: true,
-        //         };
-        //         res.redirect("/petition");
-        //     } else {
-        //         req.session = {
-        //             userId,
-        //             hasSigned: true,
-        //             signatureId: rows[0].id,
-        //             loggedIn: true,
-        //         };
-        //         res.redirect("/thanks");
-        //     }
-        // })
         .catch((err) => {
             console.log("Err in getUser:", err);
             res.render("login", { loginError: true });
@@ -124,13 +94,12 @@ function postPetition(req, res) {
                 userId,
                 hasSigned: true,
                 signatureId: rows[0].id,
-                loggedIn: true,
             };
             res.redirect("/thanks");
         })
         .catch((err) => {
             console.log("Err in addSignature:", err);
-            res.render("petition", { addSignatureError: true });
+            res.render("petition", { loggedIn: true, addSignatureError: true });
         });
 }
 
