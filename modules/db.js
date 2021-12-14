@@ -12,7 +12,7 @@ function getSigners(city) {
     let q = `SELECT users.first, users.last, p.age, p.city, p.url FROM users 
         LEFT JOIN signatures 
         ON users.id = signatures.user_id
-        JOIN user_profiles AS p
+        LEFT JOIN user_profiles AS p
         ON users.id = p.user_id`;
     if (params) {
         q += ` WHERE LOWER(p.city) = LOWER($1)`;

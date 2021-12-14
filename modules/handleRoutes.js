@@ -1,5 +1,6 @@
 const db = require("./db");
 const { compare, hash } = require("./bc");
+const { sanitizeInput } = require("./helperFunctions");
 
 function postRegister(req, res) {
     const { firstName, lastName, email, password } = req.body;
@@ -26,7 +27,8 @@ function postRegister(req, res) {
 }
 
 function postProfile(req, res) {
-    let { age, city, url } = req.body;
+    let sanitizedInput = sanitizeInput(req.body);
+    let { age, city, url } = sanitizedInput;
     const userId = req.session.userId;
     if (!age && !city && !url) {
         req.session = {
