@@ -1,33 +1,32 @@
 const db = require("./db");
 const { compare, hash } = require("./bc");
-const { validEmail } = require("./helperFunctions");
 
 function postRegister(req, res) {
     const { firstName, lastName, email, password } = req.body;
-    if (validEmail(email.toLowerCase())) {
-        hash(password)
-            .then((hashedPassword) => {
-                return db.addUser(
-                    firstName,
-                    lastName,
-                    email.toLowerCase(),
-                    hashedPassword
-                );
-            })
-            .then(({ rows }) => {
-                req.session = {
-                    userId: rows[0].id,
-                    loggedIn: true,
-                };
-                res.redirect("/petition");
-            })
-            .catch((err) => {
-                console.log("Err in addUser:", err);
-                res.render("register", { registrationError: true });
-            });
-    } else {
-        res.render("register", { registrationError: true });
-    }
+    hash(password)
+        .then((hashedPassword) => {
+            return db.addUser(
+                firstName,
+                lastName,
+                email.toLowerCase(),
+                hashedPassword
+            );
+        })
+        .then(({ rows }) => {
+            req.session = {
+                userId: rows[0].id,
+                loggedIn: true,
+            };
+            res.redirect("/petition");
+        })
+        .catch((err) => {
+            console.log("Err in addUser:", err);
+            res.render("register", { registrationError: true });
+        });
+}
+
+function postProfile(req, res) {
+    console.log(req.params);
 }
 
 function postLogin(req, res) {
@@ -138,6 +137,7 @@ function getLogout(req, res) {
 
 module.exports = {
     postRegister,
+    postProfile,
     postLogin,
     postPetition,
     getSigners,
