@@ -140,6 +140,11 @@ function getSigners(req, res) {
     db.getSigners(req.params.city)
         .then(({ rows }) => {
             signers = rows;
+            for (let signer of signers) {
+                if (signer.url && !signer.url.startsWith("http")) {
+                    signer.url = "https://" + signer.url;
+                }
+            }
             return db.getNumberOfSignatures();
         })
         .catch((err) => console.log("Err in getSigners:", err))
