@@ -17,7 +17,7 @@ function postRegister(req, res) {
                 userId: rows[0].id,
                 loggedIn: true,
             };
-            res.redirect("/petition");
+            res.redirect("/profile");
         })
         .catch((err) => {
             console.log("Err in addUser:", err);
@@ -26,43 +26,87 @@ function postRegister(req, res) {
 }
 
 function postProfile(req, res) {
-    console.log(req.params);
+    let { age, city, url } = req.body;
+    const userId = req.session.userId;
+    if (!age && !city && !url) {
+        req.session = {
+            userId,
+            loggedIn: true,
+        };
+        res.redirect("/petition");
+    } else {
+        db.addProfile(userId, age, city, url)
+            .then(() => {
+                req.session = {
+                    userId,
+                    loggedIn: true,
+                };
+                res.redirect("/petition");
+            })
+            .catch((err) => {
+                console.log("Err in addProfile:", err);
+                res.render("profile", { profileError: true });
+            });
+    }
 }
 
 function postLogin(req, res) {
     const { email, password: typedPassword } = req.body;
-    let userId;
+    let userId, signatureId;
     db.getUser(email.toLowerCase())
         .then(({ rows }) => {
             userId = rows[0].id;
+            signatureId = rows[0].signature_id;
             return compare(typedPassword, rows[0].password);
         })
         .then((passwordCorrect) => {
             if (passwordCorrect) {
-                return db.getSignatureIdByUserId(userId);
+                if (signatureId) {
+                    req.session = {
+                        userId,
+                        signatureId,
+                        hasSigned: true,
+                        loggedIn: true,
+                    };
+                    res.redirect("/thanks");
+                } else {
+                    req.session = {
+                        userId,
+                        loggedIn: true,
+                    };
+                }
             } else {
                 throw new Error(
                     `Incorrect password attempt on /login for user ${email}`
                 );
             }
         })
-        .then(({ rows }) => {
-            if (rows.length === 0) {
-                req.session = {
-                    userId,
-                    loggedIn: true,
-                };
-                res.redirect("/petition");
-            } else {
-                req.session = {
-                    userId,
-                    hasSigned: true,
-                    signatureId: rows[0].id,
-                    loggedIn: true,
-                };
-                res.redirect("/thanks");
-            }
-        })
+        // .then((passwordCorrect) => {
+        //     if (passwordCorrect) {
+        //         return db.getSignatureIdByUserId(userId);
+        //     } else {
+        //         throw new Error(
+        //             `Incorrect password attempt on /login for user ${email}`
+        //         );
+        //     }
+        // })
+        // .then(({ rows }) => {
+        //     if (rows.length === 0) {
+        //         req.session = {
+        //             userId,
+        //             loggedIn: true,
+        //         };
+        //         res.redirect("/petition");
+        //     } else {
+        //         req.session = {
+        //             userId,
+        //             hasSigned: true,
+        //             signatureId: rows[0].id,
+        //             loggedIn: true,
+        //         };
+        //         res.redirect("/thanks");
+        //     }
+        // })
         .catch((err) => {
             console.log("Err in getUser:", err);
             res.render("login", { loginError: true });
@@ -91,7 +135,7 @@ function postPetition(req, res) {
 function getSigners(req, res) {
     let signers;
 
-    db.getSigners()
+    db.getSigners(req.params.city)
         .then(({ rows }) => {
             signers = rows;
             return db.getNumberOfSignatures();

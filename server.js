@@ -39,7 +39,7 @@ app.route("/register")
     .post((req, res) => routes.postRegister(req, res));
 
 app.route("/profile")
-    .get((req, res) => res.render("profile"))
+    .get(requireLoggedInUser, (req, res) => res.render("profile"))
     .post((req, res) => routes.postProfile(req, res));
 
 app.route("/login")
@@ -65,6 +65,14 @@ app.get("/thanks", requireLoggedInUser, (req, res) => {
 });
 
 app.get("/signers", requireLoggedInUser, (req, res) => {
+    if (req.session.hasSigned) {
+        routes.getSigners(req, res);
+    } else {
+        res.redirect("/petition");
+    }
+});
+
+app.get("/signers/:city", requireLoggedInUser, (req, res) => {
     if (req.session.hasSigned) {
         routes.getSigners(req, res);
     } else {

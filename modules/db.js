@@ -7,20 +7,21 @@ const db = psql(
 
 console.log(`[db] connecting to: ${DATABASE}`);
 
-function getSigners() {
-    return db.query(
-        "SELECT users.first, users.last FROM users INNER JOIN signatures ON users.id = signatures.user_id"
-    );
+function getSigners(city) {
+    const params = city ? [city] : null;
+    let q = `SELECT users.first, users.last, p.age, p.city, p.url FROM users 
+        LEFT JOIN signatures 
+        ON users.id = signatures.user_id
+        JOIN user_profiles AS p
+        ON users.id = p.user_id`;
+    if (params) {
+        q += ` WHERE LOWER(p.city) = LOWER($1)`;
+    }
+    return db.query(q, params);
 }
 
 function getNumberOfSignatures() {
     return db.query("SELECT COUNT(*) FROM signatures");
-}
-
-function getSignatureIdByUserId(userId) {
-    const q = `SELECT id FROM signatures WHERE user_id = $1`;
-    const params = [userId];
-    return db.query(q, params);
 }
 
 function getSignature(signatureId) {
@@ -43,8 +44,17 @@ function addUser(firstName, lastName, email, hashedPw) {
     return db.query(q, params);
 }
 
+function addProfile(userId, age, city, url) {
+    const q = `INSERT INTO user_profiles (user_id, age, city, url)
+            VALUES ($1, $2, $3, $4)`;
+    const params = [userId, age, city, url];
+    return db.query(q, params);
+}
+
 function getUser(email) {
-    const q = `SELECT id, password FROM users WHERE email = $1`;
+    const q = `SELECT users.id AS id, users.password, signatures.id AS signature_id, signatures.signature
+                FROM users LEFT JOIN signatures ON users.id = signatures.user_id
+                WHERE users.email = $1`;
     const params = [email];
     return db.query(q, params);
 }
@@ -53,8 +63,8 @@ module.exports = {
     getSigners,
     getNumberOfSignatures,
     getSignature,
-    getSignatureIdByUserId,
     addSignature,
+    addProfile,
     addUser,
     getUser,
 };

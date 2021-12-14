@@ -1,7 +1,11 @@
 <h1>LOOK AT ALL THE SIGNERS</h1>
 <ul>
     {{#signers}}
-        <li>{{this.first}} {{this.last}}</li>
+        <li>{{this.first}}
+            {{this.last}}
+            {{this.age}}
+            <a href="/signers/{{this.city}}">{{this.city}}</a>
+            {{this.url}}</li>
     {{/signers}}
 </ul>
 <p>
