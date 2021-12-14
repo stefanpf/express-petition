@@ -7,13 +7,13 @@ body {
     background-color: hotpink;
 }
 
-.petition-wrapper {
+.form-wrapper {
     display: flex;
     justify-content: center;
     width: 100%;
 }
 
-.petition-inner-wrap {
+.form-inner-wrap {
     display: flex;
     flex-direction: column;
     justify-content: right;
