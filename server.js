@@ -2,7 +2,7 @@ const express = require("express");
 const cookieSession = require("cookie-session");
 const helmet = require("helmet");
 const { engine } = require("express-handlebars");
-const { logUrl } = require("./modules/helperFunctions");
+const { logUrl, requireLoggedInUser } = require("./modules/helperFunctions");
 const { COOKIE_SESSION_SECRET } = require("./secrets.json");
 const routes = require("./modules/handleRoutes");
 const app = express();
@@ -30,12 +30,8 @@ app.use(express.static("./public"));
 app.use(helmet());
 
 // ROUTES
-app.get("/", (req, res) => {
-    if (req.session.userId) {
-        res.redirect("/petition");
-    } else {
-        res.redirect("/login");
-    }
+app.get("/", requireLoggedInUser, (req, res) => {
+    res.redirect("/petition");
 });
 
 app.route("/register")
@@ -47,10 +43,8 @@ app.route("/login")
     .post((req, res) => routes.postLogin(req, res));
 
 app.route("/petition")
-    .get((req, res) => {
-        if (!req.session.userId) {
-            res.redirect("/login");
-        } else if (req.session.hasSigned) {
+    .get(requireLoggedInUser, (req, res) => {
+        if (req.session.hasSigned) {
             res.redirect("/thanks");
         } else {
             res.render("petition");
@@ -58,24 +52,23 @@ app.route("/petition")
     })
     .post((req, res) => routes.postPetition(req, res));
 
-app.get("/thanks", (req, res) => {
-    if (!req.session.userId) {
-        res.redirect("/login");
-    } else if (req.session.hasSigned) {
+app.get("/thanks", requireLoggedInUser, (req, res) => {
+    if (req.session.hasSigned) {
         routes.getThanks(req, res);
     } else {
         res.redirect("/petition");
     }
 });
 
-app.get("/signers", (req, res) => {
-    if (!req.session.userId) {
-        res.redirect("/login");
-    } else if (req.session.hasSigned) {
+app.get("/signers", requireLoggedInUser, (req, res) => {
+    if (req.session.hasSigned) {
         routes.getSigners(req, res);
     } else {
         res.redirect("/petition");
     }
 });
 
-app.listen(PORT, console.log(`Petition server listening on port ${PORT}`));
+app.listen(
+    process.env.PORT || PORT,
+    console.log(`Petition server listening on port ${PORT}`)
+);
