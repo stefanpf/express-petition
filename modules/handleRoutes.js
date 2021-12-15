@@ -101,6 +101,20 @@ function postEditProfile(req, res) {
                         hashedPassword
                     );
                 })
+                .catch((err) => {
+                    console.log("Err in updateUserWithPassword:", err);
+                    res.render("edit-profile", {
+                        editProfileError: true,
+                        loggedIn: true,
+                        first,
+                        last,
+                        email,
+                        password,
+                        age,
+                        city,
+                        url,
+                    });
+                })
                 .then(() => {
                     return db.updateUserProfile(
                         userId,
@@ -114,7 +128,7 @@ function postEditProfile(req, res) {
                     res.redirect("/profile/edit");
                 })
                 .catch((err) => {
-                    console.log("Err in updateUserWithPassword:", err);
+                    console.log("Err in updateUserProfile:", err);
                     res.render("edit-profile", {
                         editProfileError: true,
                         loggedIn: true,
