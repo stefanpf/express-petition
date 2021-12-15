@@ -68,6 +68,14 @@ function getUserProfile(userId) {
     return db.query(q, params);
 }
 
+function updateUserWithPassword(userId, first, last, email, password) {
+    const q = `UPDATE users
+            SET first = $1, last = $2, email = $3, password = $4
+            WHERE id = $5`;
+    const params = [first, last, email, password, userId];
+    return db.query(q, params);
+}
+
 function updateUserWithoutPassword(userId, first, last, email) {
     const q = `UPDATE users
             SET first = $1, last = $2, email = $3
@@ -94,6 +102,7 @@ module.exports = {
     addUser,
     getUserByEmail,
     getUserProfile,
+    updateUserWithPassword,
     updateUserWithoutPassword,
     updateUserProfile,
 };

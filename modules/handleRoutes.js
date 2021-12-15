@@ -56,26 +56,80 @@ function getEditProfile(req, res) {
 function postEditProfile(req, res) {
     const { userId } = req.session;
     const { first, last, email, password, age, city, url } = req.body;
-    if (!password) {
-        db.updateUserWithoutPassword(userId, first, last, email)
-            .then(() => {
-                console.log("users table updated for user:", userId);
-                return db.updateUserProfile(userId, age, city, url);
-            })
-            .then(() => {
-                console.log("user_profiles table updated for user:", userId);
-                req.session.userId = userId;
-                res.redirect("/profile/edit");
-            })
-            .catch((err) => {
-                console.log("Err in updateUserWithoutPassword:", err);
-                res.render("edit-profile", {
-                    editProfileError: true,
-                    loggedIn: true,
+    if (checkValidEmail(email)) {
+        if (!password) {
+            db.updateUserWithoutPassword(
+                userId,
+                first.trim(),
+                last.trim(),
+                email.toLowerCase().trim()
+            )
+                .then(() => {
+                    return db.updateUserProfile(
+                        userId,
+                        age.trim(),
+                        city.trim(),
+                        url.trim()
+                    );
+                })
+                .then(() => {
+                    req.session.userId = userId;
+                    res.redirect("/profile/edit");
+                })
+                .catch((err) => {
+                    console.log("Err in updateUserWithoutPassword:", err);
+                    res.render("edit-profile", {
+                        editProfileError: true,
+                        loggedIn: true,
+                        first,
+                        last,
+                        email,
+                        password,
+                        age,
+                        city,
+                        url,
+                    });
                 });
-            });
+        } else {
+            hash(password)
+                .then((hashedPassword) => {
+                    return db.updateUserWithPassword(
+                        userId,
+                        first.trim(),
+                        last.trim(),
+                        email.toLowerCase().trim(),
+                        hashedPassword
+                    );
+                })
+                .then(() => {
+                    return db.updateUserProfile(
+                        userId,
+                        age.trim(),
+                        city.trim(),
+                        url.trim()
+                    );
+                })
+                .then(() => {
+                    req.session.userId = userId;
+                    res.redirect("/profile/edit");
+                })
+                .catch((err) => {
+                    console.log("Err in updateUserWithPassword:", err);
+                    res.render("edit-profile", {
+                        editProfileError: true,
+                        loggedIn: true,
+                        first,
+                        last,
+                        email,
+                        password,
+                        age,
+                        city,
+                        url,
+                    });
+                });
+        }
     } else {
-        // do something else
+        res.render("edit-profile", { editProfileError: true, loggedIn: true });
     }
 }
 
