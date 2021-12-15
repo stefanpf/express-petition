@@ -17,20 +17,8 @@ function checkValidEmail(str) {
     );
 }
 
-function sanitizeInput(obj) {
-    let newObj = obj;
-    if (newObj.age === "") {
-        newObj.age = null;
-    }
-    if (newObj.city === "") {
-        newObj.city = null;
-    }
-    return newObj;
-}
-
 module.exports = {
     logUrl,
     requireLoggedInUser,
     checkValidEmail,
-    sanitizeInput,
 };

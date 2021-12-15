@@ -1,6 +1,6 @@
 const db = require("./db");
 const { compare, hash } = require("./bc");
-const { sanitizeInput, checkValidEmail } = require("./helperFunctions");
+const { checkValidEmail } = require("./helperFunctions");
 
 function postRegister(req, res) {
     const { firstName, lastName, email, password } = req.body;
@@ -29,9 +29,12 @@ function postRegister(req, res) {
     }
 }
 
+function getEditProfile(req, res) {}
+
+function postEditProfile(req, res) {}
+
 function postProfile(req, res) {
-    let sanitizedInput = sanitizeInput(req.body);
-    let { age, city, url } = sanitizedInput;
+    let { age, city, url } = req.body;
     const userId = req.session.userId;
     if (!age && !city && !url) {
         req.session = {
@@ -39,7 +42,7 @@ function postProfile(req, res) {
         };
         res.redirect("/petition");
     } else {
-        db.addProfile(userId, age, city, url)
+        db.addProfile(userId, age || null, city, url)
             .then(() => {
                 req.session = {
                     userId,
@@ -155,16 +158,24 @@ function getThanks(req, res) {
 }
 
 function getLogout(req, res) {
-    req.session.userId = "";
+    req.session.userId = null;
     res.redirect("/");
 }
 
+function postDeleteSignature(req, res) {}
+
+function postDeleteAccount(req, res) {}
+
 module.exports = {
     postRegister,
+    getEditProfile,
+    postEditProfile,
     postProfile,
     postLogin,
     postPetition,
     getSigners,
     getThanks,
     getLogout,
+    postDeleteSignature,
+    postDeleteAccount,
 };
