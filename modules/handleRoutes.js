@@ -1,28 +1,32 @@
 const db = require("./db");
 const { compare, hash } = require("./bc");
-const { sanitizeInput } = require("./helperFunctions");
+const { sanitizeInput, checkValidEmail } = require("./helperFunctions");
 
 function postRegister(req, res) {
     const { firstName, lastName, email, password } = req.body;
-    hash(password)
-        .then((hashedPassword) => {
-            return db.addUser(
-                firstName,
-                lastName,
-                email.toLowerCase(),
-                hashedPassword
-            );
-        })
-        .then(({ rows }) => {
-            req.session = {
-                userId: rows[0].id,
-            };
-            res.redirect("/profile");
-        })
-        .catch((err) => {
-            console.log("Err in addUser:", err);
-            res.render("register", { registrationError: true });
-        });
+    if (checkValidEmail(email)) {
+        hash(password)
+            .then((hashedPassword) => {
+                return db.addUser(
+                    firstName,
+                    lastName,
+                    email.toLowerCase(),
+                    hashedPassword
+                );
+            })
+            .then(({ rows }) => {
+                req.session = {
+                    userId: rows[0].id,
+                };
+                res.redirect("/profile");
+            })
+            .catch((err) => {
+                console.log("Err in addUser:", err);
+                res.render("register", { registrationError: true });
+            });
+    } else {
+        res.render("register", { registrationError: true });
+    }
 }
 
 function postProfile(req, res) {

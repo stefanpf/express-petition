@@ -11,6 +11,11 @@ function requireLoggedInUser(req, res, next) {
     }
 }
 
+function checkValidEmail(str) {
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        str
+    );
+}
 function sanitizeInput(obj) {
     let newObj = obj;
     if (newObj.age === "") {
@@ -22,6 +27,9 @@ function sanitizeInput(obj) {
     return newObj;
 }
 
-module.exports.sanitizeInput = sanitizeInput;
-module.exports.logUrl = logUrl;
-module.exports.requireLoggedInUser = requireLoggedInUser;
+module.exports = {
+    logUrl,
+    requireLoggedInUser,
+    checkValidEmail,
+    sanitizeInput,
+};
