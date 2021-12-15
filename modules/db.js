@@ -51,7 +51,7 @@ function addProfile(userId, age, city, url) {
     return db.query(q, params);
 }
 
-function getUser(email) {
+function getUserByEmail(email) {
     const q = `SELECT users.id AS id, users.password, signatures.id AS signature_id, signatures.signature
                 FROM users LEFT JOIN signatures ON users.id = signatures.user_id
                 WHERE users.email = $1`;
@@ -68,6 +68,23 @@ function getUserProfile(userId) {
     return db.query(q, params);
 }
 
+function updateUserWithoutPassword(userId, first, last, email) {
+    const q = `UPDATE users
+            SET first = $1, last = $2, email = $3
+            WHERE id = $4`;
+    const params = [first, last, email, userId];
+    return db.query(q, params);
+}
+
+function updateUserProfile(userId, age, city, url) {
+    const q = `INSERT INTO user_profiles (user_id, age, city, url)
+            VALUES ($1, $2, $3, $4)
+            ON CONFLICT (user_id)
+            DO UPDATE SET age = $2, city = $3, url = $4`;
+    const params = [userId, age, city, url];
+    return db.query(q, params);
+}
+
 module.exports = {
     getSigners,
     getNumberOfSignatures,
@@ -75,6 +92,8 @@ module.exports = {
     addSignature,
     addProfile,
     addUser,
-    getUser,
+    getUserByEmail,
     getUserProfile,
+    updateUserWithoutPassword,
+    updateUserProfile,
 };

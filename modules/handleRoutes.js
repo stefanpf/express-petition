@@ -53,7 +53,31 @@ function getEditProfile(req, res) {
         });
 }
 
-function postEditProfile(req, res) {}
+function postEditProfile(req, res) {
+    const { userId } = req.session;
+    const { first, last, email, password, age, city, url } = req.body;
+    if (!password) {
+        db.updateUserWithoutPassword(userId, first, last, email)
+            .then(() => {
+                console.log("users table updated for user:", userId);
+                return db.updateUserProfile(userId, age, city, url);
+            })
+            .then(() => {
+                console.log("user_profiles table updated for user:", userId);
+                req.session.userId = userId;
+                res.redirect("/profile/edit");
+            })
+            .catch((err) => {
+                console.log("Err in updateUserWithoutPassword:", err);
+                res.render("edit-profile", {
+                    editProfileError: true,
+                    loggedIn: true,
+                });
+            });
+    } else {
+        // do something else
+    }
+}
 
 function postProfile(req, res) {
     let { age, city, url } = req.body;
@@ -81,7 +105,7 @@ function postProfile(req, res) {
 function postLogin(req, res) {
     const { email, password: typedPassword } = req.body;
     let userId, signatureId;
-    db.getUser(email.toLowerCase())
+    db.getUserByEmail(email.toLowerCase())
         .then(({ rows }) => {
             userId = rows[0].id;
             signatureId = rows[0].signature_id;
@@ -109,7 +133,7 @@ function postLogin(req, res) {
             }
         })
         .catch((err) => {
-            console.log("Err in getUser:", err);
+            console.log("Err in getUserByEmail:", err);
             res.render("login", { loginError: true });
         });
 }
