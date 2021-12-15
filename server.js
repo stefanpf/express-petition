@@ -3,7 +3,7 @@ const cookieSession = require("cookie-session");
 const helmet = require("helmet");
 const { engine } = require("express-handlebars");
 const { logUrl, requireLoggedInUser } = require("./modules/helperFunctions");
-const { COOKIE_SESSION_SECRET } = require("./secrets.json");
+// const { COOKIE_SESSION_SECRET } = require("./secrets.json");
 const routes = require("./modules/handleRoutes");
 const app = express();
 const PORT = 8080;
@@ -17,7 +17,9 @@ app.use(logUrl);
 app.use(express.urlencoded());
 app.use(
     cookieSession({
-        secret: COOKIE_SESSION_SECRET,
+        secret:
+            process.env.SESSION_SECRET ||
+            require("./secrets").COOKIE_SESSION_SECRET,
         maxAge: 1000 * 60 * 60 * 24 * 14,
         sameSite: true,
     })
