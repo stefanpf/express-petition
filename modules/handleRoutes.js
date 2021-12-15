@@ -73,8 +73,7 @@ function postEditProfile(req, res) {
                     );
                 })
                 .then(() => {
-                    req.session.userId = userId;
-                    res.redirect("/profile/edit");
+                    res.redirect("/thanks");
                 })
                 .catch((err) => {
                     console.log("Err in updateUserWithoutPassword:", err);
@@ -124,8 +123,7 @@ function postEditProfile(req, res) {
                     );
                 })
                 .then(() => {
-                    req.session.userId = userId;
-                    res.redirect("/profile/edit");
+                    res.redirect("/thanks");
                 })
                 .catch((err) => {
                     console.log("Err in updateUserProfile:", err);
@@ -151,16 +149,10 @@ function postProfile(req, res) {
     let { age, city, url } = req.body;
     const userId = req.session.userId;
     if (!age && !city && !url) {
-        req.session = {
-            userId,
-        };
         res.redirect("/petition");
     } else {
         db.addProfile(userId, age || null, city, url)
             .then(() => {
-                req.session = {
-                    userId,
-                };
                 res.redirect("/petition");
             })
             .catch((err) => {
