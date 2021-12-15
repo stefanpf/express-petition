@@ -38,6 +38,10 @@ app.route("/register")
     .get((req, res) => res.render("register"))
     .post((req, res) => routes.postRegister(req, res));
 
+app.route("/profile/edit")
+    .get(requireLoggedInUser, (req, res) => routes.getEditProfile(req, res))
+    .post((req, res) => routes.postEditProfile(req, res));
+
 app.route("/profile")
     .get(requireLoggedInUser, (req, res) =>
         res.render("profile", { loggedIn: true })
@@ -80,6 +84,14 @@ app.get("/signers/:city", requireLoggedInUser, (req, res) => {
     } else {
         res.redirect("/petition");
     }
+});
+
+app.post("/delete-signature", requireLoggedInUser, (req, res) => {
+    routes.postDeleteSignature(req, res);
+});
+
+app.post("/delete-account", requireLoggedInUser, (req, res) => {
+    routes.postDeleteAccount(req, res);
 });
 
 app.get("/logout", requireLoggedInUser, (req, res) => {
