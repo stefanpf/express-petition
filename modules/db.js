@@ -93,6 +93,18 @@ function updateUserProfile(userId, age, city, url) {
     return db.query(q, params);
 }
 
+function deleteSignature(userId) {
+    const q = `DELETE FROM signatures WHERE user_id = $1`;
+    const params = [userId];
+    return db.query(q, params);
+}
+
+function deleteAccount(userId) {
+    const q = `DELETE FROM users WHERE id = $1`;
+    const params = [userId];
+    return db.query(q, params);
+}
+
 module.exports = {
     getSigners,
     getNumberOfSignatures,
@@ -105,4 +117,6 @@ module.exports = {
     updateUserWithPassword,
     updateUserWithoutPassword,
     updateUserProfile,
+    deleteSignature,
+    deleteAccount,
 };

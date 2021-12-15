@@ -276,9 +276,30 @@ function getLogout(req, res) {
     res.redirect("/");
 }
 
-function postDeleteSignature(req, res) {}
+function postDeleteSignature(req, res) {
+    const { userId } = req.session;
+    db.deleteSignature(userId)
+        .then(() => {
+            req.session = { userId, hasSigned: null };
+            res.redirect("/petition");
+        })
+        .catch((err) => {
+            console.log("Err in deleteSignature:", err);
+            res.render("edit-profile", { editProfileError: true });
+        });
+}
 
-function postDeleteAccount(req, res) {}
+function postDeleteAccount(req, res) {
+    db.deleteAccount(req.session.userId)
+        .then(() => {
+            req.session = { userId: null, hasSigned: null };
+            res.redirect("/register");
+        })
+        .catch((err) => {
+            console.log("Err in deleteAccount:", err);
+            res.render("edit-profile", { editProfileError: true });
+        });
+}
 
 module.exports = {
     postRegister,

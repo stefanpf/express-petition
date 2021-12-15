@@ -30,5 +30,10 @@
         {{#if editProfileError}}<h2>Uh oh, there was a problem, please try
                 again...</h2>{{/if}}
     </div>
-
+    <form action="/delete-signature" method="post">
+        <button type="submit">DELETE SIGNATURE</button>
+    </form>
+    <form action="/delete-account" method="post">
+        <button type="submit">DELETE ACCOUNT</button>
+    </form>
 </div>
