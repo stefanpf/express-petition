@@ -3,7 +3,6 @@ const cookieSession = require("cookie-session");
 const helmet = require("helmet");
 const { engine } = require("express-handlebars");
 const { logUrl, requireLoggedInUser } = require("./modules/helperFunctions");
-// const { COOKIE_SESSION_SECRET } = require("./secrets.json");
 const routes = require("./modules/handleRoutes");
 const app = express();
 const PORT = 8080;
@@ -13,6 +12,14 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 
 // MIDDLEWARE
+if (process.env.NODE_ENV == "production") {
+    app.use((req, res, next) => {
+        if (req.headers["x-forwarded-proto"].startsWith("https")) {
+            return next();
+        }
+        res.redirect(`https://${req.hostname}${req.url}`);
+    });
+}
 app.use(logUrl);
 app.use(express.urlencoded());
 app.use(
