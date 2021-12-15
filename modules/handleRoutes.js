@@ -8,9 +8,9 @@ function postRegister(req, res) {
         hash(password)
             .then((hashedPassword) => {
                 return db.addUser(
-                    firstName,
-                    lastName,
-                    email.toLowerCase(),
+                    firstName.trim(),
+                    lastName.trim(),
+                    email.toLowerCase().trim(),
                     hashedPassword
                 );
             })

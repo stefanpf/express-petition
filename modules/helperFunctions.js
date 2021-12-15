@@ -16,6 +16,7 @@ function checkValidEmail(str) {
         str
     );
 }
+
 function sanitizeInput(obj) {
     let newObj = obj;
     if (newObj.age === "") {
