@@ -95,7 +95,8 @@ app.post("/delete-account", requireLoggedInUser, (req, res) => {
 });
 
 app.get("/logout", requireLoggedInUser, (req, res) => {
-    routes.getLogout(req, res);
+    req.session = null;
+    res.redirect("/");
 });
 
 app.listen(

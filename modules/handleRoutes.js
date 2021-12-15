@@ -271,11 +271,6 @@ function getThanks(req, res) {
         });
 }
 
-function getLogout(req, res) {
-    req.session.userId = null;
-    res.redirect("/");
-}
-
 function postDeleteSignature(req, res) {
     const { userId } = req.session;
     db.deleteSignature(userId)
@@ -292,7 +287,7 @@ function postDeleteSignature(req, res) {
 function postDeleteAccount(req, res) {
     db.deleteAccount(req.session.userId)
         .then(() => {
-            req.session = { userId: null, hasSigned: null };
+            req.session = null;
             res.redirect("/register");
         })
         .catch((err) => {
@@ -310,7 +305,6 @@ module.exports = {
     postPetition,
     getSigners,
     getThanks,
-    getLogout,
     postDeleteSignature,
     postDeleteAccount,
 };
