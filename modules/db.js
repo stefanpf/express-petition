@@ -59,6 +59,15 @@ function getUser(email) {
     return db.query(q, params);
 }
 
+function getUserProfile(userId) {
+    const q = `SELECT u.first, u.last, u.email, p.age, p.city, p.url 
+            FROM users AS u LEFT JOIN user_profiles AS p
+            ON u.id = p.user_id
+            WHERE u.id = $1`;
+    const params = [userId];
+    return db.query(q, params);
+}
+
 module.exports = {
     getSigners,
     getNumberOfSignatures,
@@ -67,4 +76,5 @@ module.exports = {
     addProfile,
     addUser,
     getUser,
+    getUserProfile,
 };

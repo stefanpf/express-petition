@@ -29,7 +29,29 @@ function postRegister(req, res) {
     }
 }
 
-function getEditProfile(req, res) {}
+function getEditProfile(req, res) {
+    const { userId } = req.session;
+    db.getUserProfile(userId)
+        .then(({ rows }) => {
+            const { first, last, email, age, city, url } = rows[0];
+            res.render("edit-profile", {
+                loggedIn: true,
+                first,
+                last,
+                email,
+                age,
+                city,
+                url,
+            });
+        })
+        .catch((err) => {
+            console.log("Err in getUserProfile:", err);
+            res.render("edit-profile", {
+                loggedIn: true,
+                editProfileError: true,
+            });
+        });
+}
 
 function postEditProfile(req, res) {}
 
