@@ -7,7 +7,17 @@ const { checkValidEmail } = require("../utils/helper-functions");
 
 authRouter
     .route("/register")
-    .get((req, res) => res.render("register", { loggedOut: true }))
+    .get((req, res) => {
+        if (req.session.userId) {
+            if (!req.session.hasSigned) {
+                res.redirect("/petition");
+            } else {
+                res.redirect("/thanks");
+            }
+        } else {
+            res.render("register", { loggedOut: true });
+        }
+    })
     .post((req, res) => {
         const { firstName, lastName, email, password } = req.body;
         if (checkValidEmail(email)) {
@@ -37,7 +47,17 @@ authRouter
 
 authRouter
     .route("/login")
-    .get((req, res) => res.render("login", { loggedOut: true }))
+    .get((req, res) => {
+        if (req.session.userId) {
+            if (!req.session.hasSigned) {
+                res.redirect("/petition");
+            } else {
+                res.redirect("/thanks");
+            }
+        } else {
+            res.render("login", { loggedOut: true });
+        }
+    })
     .post((req, res) => {
         const { email, password: typedPassword } = req.body;
         let userId, signatureId;
