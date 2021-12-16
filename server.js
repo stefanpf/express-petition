@@ -2,14 +2,11 @@ const express = require("express");
 const cookieSession = require("cookie-session");
 const helmet = require("helmet");
 const { engine } = require("express-handlebars");
-const {
-    requireLoggedInUser,
-    // requireHasSigned,
-} = require("./middleware/authorization");
+const { requireLoggedInUser } = require("./middleware/authorization");
 const { logUrl } = require("./utils/helper-functions");
-const routes = require("./utils/handleRoutes");
 const authRouter = require("./routers/auth-router");
 const profileRouter = require("./routers/profile-router");
+const petitionRouter = require("./routers/petition-router");
 const app = express();
 const PORT = 8080;
 
@@ -41,52 +38,15 @@ app.use((req, res, next) => {
     res.setHeader("x-frame-options", "deny");
     next();
 });
-app.use(authRouter);
-app.use(profileRouter);
 app.use(express.static("./public"));
 app.use(helmet());
 
 // ROUTES
+app.use(authRouter);
+app.use(profileRouter);
+app.use(petitionRouter);
 app.get("/", requireLoggedInUser, (req, res) => {
     res.redirect("/petition");
-});
-
-app.route("/petition")
-    .get(requireLoggedInUser, (req, res) => {
-        if (req.session.hasSigned) {
-            res.redirect("/thanks");
-        } else {
-            res.render("petition");
-        }
-    })
-    .post((req, res) => routes.postPetition(req, res));
-
-app.get("/thanks", requireLoggedInUser, (req, res) => {
-    if (req.session.hasSigned) {
-        routes.getThanks(req, res);
-    } else {
-        res.redirect("/petition");
-    }
-});
-
-app.get("/signers", requireLoggedInUser, (req, res) => {
-    if (req.session.hasSigned) {
-        routes.getSigners(req, res);
-    } else {
-        res.redirect("/petition");
-    }
-});
-
-app.get("/signers/:city", requireLoggedInUser, (req, res) => {
-    if (req.session.hasSigned) {
-        routes.getSigners(req, res);
-    } else {
-        res.redirect("/petition");
-    }
-});
-
-app.post("/delete-signature", requireLoggedInUser, (req, res) => {
-    routes.postDeleteSignature(req, res);
 });
 
 app.listen(
