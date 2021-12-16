@@ -2,7 +2,6 @@ const express = require("express");
 const cookieSession = require("cookie-session");
 const helmet = require("helmet");
 const { engine } = require("express-handlebars");
-const { requireLoggedInUser } = require("./middleware/authorization");
 const { logUrl } = require("./utils/helper-functions");
 const authRouter = require("./routers/auth-router");
 const profileRouter = require("./routers/profile-router");
