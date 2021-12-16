@@ -17,6 +17,9 @@ petitionRouter
     .post((req, res) => {
         const { signature } = req.body;
         const { userId } = req.session;
+        if (signature === "") {
+            return res.render("petition", { addSignatureError: true });
+        }
         db.addSignature(userId, signature)
             .then(({ rows }) => {
                 req.session = {

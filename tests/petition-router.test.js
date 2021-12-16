@@ -1,6 +1,12 @@
 const supertest = require("supertest");
 const { app } = require("../server");
 const cookieSession = require("cookie-session");
+const {
+    addSignature,
+    getNumberOfSignatures,
+    getSignature,
+    getSigners,
+} = require("../utils/db");
 
 jest.mock("../utils/db.js");
 
@@ -33,8 +39,34 @@ test("GET /petition redirects to /thanks when logged in and has signed", () => {
         .expect("location", "/thanks");
 });
 
+test("POST /petition succeeds with good input", () => {
+    cookieSession.mockSessionOnce({ userId: 1 });
+    addSignature.mockResolvedValueOnce({
+        rows: [{ id: 1 }],
+    });
+    return supertest(app)
+        .post("/petition")
+        .expect(302)
+        .expect("location", "/thanks");
+});
+
+// Route handles empty input correctly but test doesn't work
+test("POST /petition fails with bad input", () => {
+    cookieSession.mockSessionOnce({ userId: 1 });
+    addSignature.mockResolvedValueOnce({
+        rows: [{ id: 1 }],
+    });
+    return supertest(app).post("/petition").send("").expect(200);
+});
+
 test("GET /thanks functional when logged in and has signed", () => {
     cookieSession.mockSessionOnce({ userId: 1, hasSigned: true });
+    getNumberOfSignatures.mockResolvedValueOnce({
+        rows: [{ count: 1 }],
+    });
+    getSignature.mockResolvedValueOnce({
+        rows: [{ signature: "test" }],
+    });
     return supertest(app).get("/thanks").expect(200);
 });
 
@@ -55,6 +87,15 @@ test("GET /thanks redirects to /login when not logged in", () => {
 
 test("GET /signers functional when logged in and has signed", () => {
     cookieSession.mockSessionOnce({ userId: 1, hasSigned: true });
+    getNumberOfSignatures.mockResolvedValueOnce({
+        rows: [{ count: 1 }],
+    });
+    getSigners.mockResolvedValueOnce({
+        rows: [
+            { first: "a", last: "b" },
+            { first: "a", last: "b" },
+        ],
+    });
     return supertest(app).get("/signers").expect(200);
 });
 
