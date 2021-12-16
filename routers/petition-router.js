@@ -87,6 +87,10 @@ petitionRouter.post("/delete-signature", (req, res) => {
         });
 });
 
+petitionRouter.get("/", (req, res) => {
+    res.redirect("/petition");
+});
+
 function getSigners(req, res) {
     let signers;
 

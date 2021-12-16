@@ -45,9 +45,6 @@ app.use(helmet());
 app.use(authRouter);
 app.use(profileRouter);
 app.use(petitionRouter);
-app.get("/", requireLoggedInUser, (req, res) => {
-    res.redirect("/petition");
-});
 
 app.listen(
     process.env.PORT || PORT,
