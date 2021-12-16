@@ -6,15 +6,14 @@ function requireLoggedInUser(req, res, next) {
     }
 }
 
-function requireLoggedOutUser(req, res, next) {
-    if (req.session.userId) {
-        res.redirect("/");
+function requireHasSigned(req, res, next) {
+    if (!req.hasSigned) {
+        res.redirect("/petition");
     } else {
         next();
     }
 }
-
 module.exports = {
     requireLoggedInUser,
-    requireLoggedOutUser,
+    requireHasSigned,
 };

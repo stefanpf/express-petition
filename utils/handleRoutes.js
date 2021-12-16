@@ -1,33 +1,6 @@
 const db = require("./db");
-const { compare, hash } = require("./bc");
+const { hash } = require("./bc");
 const { checkValidEmail } = require("./helper-functions");
-
-function postRegister(req, res) {
-    const { firstName, lastName, email, password } = req.body;
-    if (checkValidEmail(email)) {
-        hash(password)
-            .then((hashedPassword) => {
-                return db.addUser(
-                    firstName.trim(),
-                    lastName.trim(),
-                    email.toLowerCase().trim(),
-                    hashedPassword
-                );
-            })
-            .then(({ rows }) => {
-                req.session = {
-                    userId: rows[0].id,
-                };
-                res.redirect("/profile");
-            })
-            .catch((err) => {
-                console.log("Err in addUser:", err);
-                res.render("register", { registrationError: true });
-            });
-    } else {
-        res.render("register", { registrationError: true });
-    }
-}
 
 function getEditProfile(req, res) {
     const { userId } = req.session;
@@ -157,42 +130,6 @@ function postProfile(req, res) {
     }
 }
 
-function postLogin(req, res) {
-    const { email, password: typedPassword } = req.body;
-    let userId, signatureId;
-    db.getUserByEmail(email.toLowerCase())
-        .then(({ rows }) => {
-            userId = rows[0].id;
-            signatureId = rows[0].signature_id;
-            return compare(typedPassword, rows[0].password);
-        })
-        .then((passwordCorrect) => {
-            if (passwordCorrect) {
-                if (signatureId) {
-                    req.session = {
-                        userId,
-                        signatureId,
-                        hasSigned: true,
-                    };
-                    res.redirect("/thanks");
-                } else {
-                    req.session = {
-                        userId,
-                    };
-                    res.redirect("/petition");
-                }
-            } else {
-                throw new Error(
-                    `Incorrect password attempt on /login for user ${email}`
-                );
-            }
-        })
-        .catch((err) => {
-            console.log("Err in getUserByEmail:", err);
-            res.render("login", { loginError: true });
-        });
-}
-
 function postPetition(req, res) {
     const { signature } = req.body;
     const { userId } = req.session;
@@ -282,11 +219,9 @@ function postDeleteAccount(req, res) {
 }
 
 module.exports = {
-    postRegister,
     getEditProfile,
     postEditProfile,
     postProfile,
-    postLogin,
     postPetition,
     getSigners,
     getThanks,

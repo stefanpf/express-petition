@@ -5,6 +5,7 @@ const { engine } = require("express-handlebars");
 const { requireLoggedInUser } = require("./middleware/authorization");
 const { logUrl } = require("./utils/helper-functions");
 const routes = require("./utils/handleRoutes");
+const authRouter = require("./routers/auth-router");
 const app = express();
 const PORT = 8080;
 
@@ -36,6 +37,7 @@ app.use((req, res, next) => {
     res.setHeader("x-frame-options", "deny");
     next();
 });
+app.use(authRouter);
 app.use(express.static("./public"));
 app.use(helmet());
 
@@ -44,21 +46,13 @@ app.get("/", requireLoggedInUser, (req, res) => {
     res.redirect("/petition");
 });
 
-app.route("/register")
-    .get((req, res) => res.render("register", { loggedOut: true }))
-    .post((req, res) => routes.postRegister(req, res));
-
-app.route("/login")
-    .get((req, res) => res.render("login", { loggedOut: true }))
-    .post((req, res) => routes.postLogin(req, res));
+app.route("/profile")
+    .get(requireLoggedInUser, (req, res) => res.render("profile"))
+    .post((req, res) => routes.postProfile(req, res));
 
 app.route("/profile/edit")
     .get(requireLoggedInUser, (req, res) => routes.getEditProfile(req, res))
     .post((req, res) => routes.postEditProfile(req, res));
-
-app.route("/profile")
-    .get(requireLoggedInUser, (req, res) => res.render("profile"))
-    .post((req, res) => routes.postProfile(req, res));
 
 app.route("/petition")
     .get(requireLoggedInUser, (req, res) => {
