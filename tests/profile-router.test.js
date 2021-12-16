@@ -1,6 +1,7 @@
 const supertest = require("supertest");
 const { app } = require("../server");
 const cookieSession = require("cookie-session");
+const { getUserProfile } = require("../utils/db");
 
 jest.mock("../utils/db.js");
 
@@ -15,6 +16,9 @@ test("GET /profile redirects to /login when not logged in", () => {
 
 test("GET /profile/edit functional when logged in", () => {
     cookieSession.mockSessionOnce({ userId: 1 });
+    getUserProfile.mockResolvedValueOnce({
+        rows: [{ first: "a", last: "a", email: "test@test.com", age: 27 }],
+    });
     return supertest(app).get("/profile/edit").expect(200);
 });
 
