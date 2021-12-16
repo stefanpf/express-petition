@@ -2,6 +2,8 @@ const supertest = require("supertest");
 const { app } = require("../server");
 const cookieSession = require("cookie-session");
 
+jest.mock("../utils/db.js");
+
 test("GET / redirects to /petition when logged in", () => {
     cookieSession.mockSessionOnce({ userId: 1 });
     return supertest(app).get("/").expect(302).expect("location", "/petition");

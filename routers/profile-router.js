@@ -143,7 +143,7 @@ profileRouter.post("/delete-account", (req, res) => {
     db.deleteAccount(req.session.userId)
         .then(() => {
             req.session = null;
-            res.redirect("/register");
+            res.redirect("/login");
         })
         .catch((err) => {
             console.log("Err in deleteAccount:", err);

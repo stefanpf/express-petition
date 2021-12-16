@@ -25,3 +25,10 @@ test("GET /profile/edit functional when logged in", () => {
 test("GET /profile/edit redirects to /login when not logged in", () => {
     return supertest(app).get("/").expect(302).expect("location", "/login");
 });
+
+test("POST /delete-account redirects to /login", () => {
+    return supertest(app)
+        .post("/delete-account")
+        .expect(302)
+        .expect("location", "/login");
+});
