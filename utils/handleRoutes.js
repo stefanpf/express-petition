@@ -1,6 +1,6 @@
 const db = require("./db");
 const { compare, hash } = require("./bc");
-const { checkValidEmail } = require("./helperFunctions");
+const { checkValidEmail } = require("./helper-functions");
 
 function postRegister(req, res) {
     const { firstName, lastName, email, password } = req.body;
@@ -146,7 +146,7 @@ function postProfile(req, res) {
     if (!age && !city && !url) {
         res.redirect("/petition");
     } else {
-        db.addProfile(userId, age || null, city, url)
+        db.addProfile(userId, age, city, url)
             .then(() => {
                 res.redirect("/petition");
             })

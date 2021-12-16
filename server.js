@@ -2,8 +2,9 @@ const express = require("express");
 const cookieSession = require("cookie-session");
 const helmet = require("helmet");
 const { engine } = require("express-handlebars");
-const { logUrl, requireLoggedInUser } = require("./modules/helperFunctions");
-const routes = require("./modules/handleRoutes");
+const { requireLoggedInUser } = require("./middleware/authorization");
+const { logUrl } = require("./utils/helper-functions");
+const routes = require("./utils/handleRoutes");
 const app = express();
 const PORT = 8080;
 
@@ -47,6 +48,10 @@ app.route("/register")
     .get((req, res) => res.render("register", { loggedOut: true }))
     .post((req, res) => routes.postRegister(req, res));
 
+app.route("/login")
+    .get((req, res) => res.render("login", { loggedOut: true }))
+    .post((req, res) => routes.postLogin(req, res));
+
 app.route("/profile/edit")
     .get(requireLoggedInUser, (req, res) => routes.getEditProfile(req, res))
     .post((req, res) => routes.postEditProfile(req, res));
@@ -54,10 +59,6 @@ app.route("/profile/edit")
 app.route("/profile")
     .get(requireLoggedInUser, (req, res) => res.render("profile"))
     .post((req, res) => routes.postProfile(req, res));
-
-app.route("/login")
-    .get((req, res) => res.render("login", { loggedOut: true }))
-    .post((req, res) => routes.postLogin(req, res));
 
 app.route("/petition")
     .get(requireLoggedInUser, (req, res) => {

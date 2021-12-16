@@ -54,7 +54,7 @@ function addUser(firstName, lastName, email, hashedPw) {
 function addProfile(userId, age, city, url) {
     const q = `INSERT INTO user_profiles (user_id, age, city, url)
             VALUES ($1, $2, $3, $4)`;
-    const params = [userId, age, city, url];
+    const params = [userId, age || null, city, url];
     return db.query(q, params);
 }
 
@@ -96,7 +96,7 @@ function updateUserProfile(userId, age, city, url) {
             VALUES ($1, $2, $3, $4)
             ON CONFLICT (user_id)
             DO UPDATE SET age = $2, city = $3, url = $4`;
-    const params = [userId, age, city, url];
+    const params = [userId, age || null, city, url];
     return db.query(q, params);
 }
 
