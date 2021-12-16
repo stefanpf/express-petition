@@ -38,12 +38,6 @@ app.use((req, res, next) => {
 app.use(express.static("./public"));
 app.use(helmet());
 
-// DIAGNOSTIC MIDDLEWARE
-app.use((req, res, next) => {
-    console.log("req.session:", req.session);
-    next();
-});
-
 // ROUTES
 app.get("/", requireLoggedInUser, (req, res) => {
     res.redirect("/petition");
