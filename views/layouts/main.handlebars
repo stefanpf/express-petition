@@ -7,7 +7,11 @@
         <title>Petition</title>
     </head>
     <body>
-        <header>{{#if loggedIn}}<a href="/logout">Logout</a>{{/if}}</header>
+        <header>
+            {{#if loggedOut}}{{else}}
+                <a href="/logout">Logout</a>
+            {{/if}}
+        </header>
         {{{body}}}
         <footer>
             &copy; 2021 Cool Industries, Inc.

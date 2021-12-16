@@ -38,13 +38,19 @@ app.use((req, res, next) => {
 app.use(express.static("./public"));
 app.use(helmet());
 
+// DIAGNOSTIC MIDDLEWARE
+app.use((req, res, next) => {
+    console.log("req.session:", req.session);
+    next();
+});
+
 // ROUTES
 app.get("/", requireLoggedInUser, (req, res) => {
     res.redirect("/petition");
 });
 
 app.route("/register")
-    .get((req, res) => res.render("register"))
+    .get((req, res) => res.render("register", { loggedOut: true }))
     .post((req, res) => routes.postRegister(req, res));
 
 app.route("/profile/edit")
@@ -52,13 +58,11 @@ app.route("/profile/edit")
     .post((req, res) => routes.postEditProfile(req, res));
 
 app.route("/profile")
-    .get(requireLoggedInUser, (req, res) =>
-        res.render("profile", { loggedIn: true })
-    )
+    .get(requireLoggedInUser, (req, res) => res.render("profile"))
     .post((req, res) => routes.postProfile(req, res));
 
 app.route("/login")
-    .get((req, res) => res.render("login"))
+    .get((req, res) => res.render("login", { loggedOut: true }))
     .post((req, res) => routes.postLogin(req, res));
 
 app.route("/petition")
@@ -66,7 +70,7 @@ app.route("/petition")
         if (req.session.hasSigned) {
             res.redirect("/thanks");
         } else {
-            res.render("petition", { loggedIn: true });
+            res.render("petition");
         }
     })
     .post((req, res) => routes.postPetition(req, res));

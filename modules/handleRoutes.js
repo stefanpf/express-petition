@@ -35,7 +35,6 @@ function getEditProfile(req, res) {
         .then(({ rows }) => {
             const { first, last, email, age, city, url } = rows[0];
             res.render("edit-profile", {
-                loggedIn: true,
                 first,
                 last,
                 email,
@@ -47,7 +46,6 @@ function getEditProfile(req, res) {
         .catch((err) => {
             console.log("Err in getUserProfile:", err);
             res.render("edit-profile", {
-                loggedIn: true,
                 editProfileError: true,
             });
         });
@@ -79,7 +77,6 @@ function postEditProfile(req, res) {
                     console.log("Err in updateUserWithoutPassword:", err);
                     res.render("edit-profile", {
                         editProfileError: true,
-                        loggedIn: true,
                         first,
                         last,
                         email,
@@ -104,7 +101,6 @@ function postEditProfile(req, res) {
                     console.log("Err in updateUserWithPassword:", err);
                     res.render("edit-profile", {
                         editProfileError: true,
-                        loggedIn: true,
                         first,
                         last,
                         email,
@@ -129,7 +125,6 @@ function postEditProfile(req, res) {
                     console.log("Err in updateUserProfile:", err);
                     res.render("edit-profile", {
                         editProfileError: true,
-                        loggedIn: true,
                         first,
                         last,
                         email,
@@ -141,7 +136,7 @@ function postEditProfile(req, res) {
                 });
         }
     } else {
-        res.render("edit-profile", { editProfileError: true, loggedIn: true });
+        res.render("edit-profile", { editProfileError: true });
     }
 }
 
@@ -157,7 +152,7 @@ function postProfile(req, res) {
             })
             .catch((err) => {
                 console.log("Err in addProfile:", err);
-                res.render("profile", { loggedIn: true, profileError: true });
+                res.render("profile", { profileError: true });
             });
     }
 }
@@ -212,7 +207,7 @@ function postPetition(req, res) {
         })
         .catch((err) => {
             console.log("Err in addSignature:", err);
-            res.render("petition", { loggedIn: true, addSignatureError: true });
+            res.render("petition", { addSignatureError: true });
         });
 }
 
@@ -234,7 +229,6 @@ function getSigners(req, res) {
             res.render("signers", {
                 signers,
                 numberOfSignatures: rows[0].count,
-                loggedIn: true,
             });
         })
         .catch((err) => console.log("Err in getNumberOfSignatures:", err));
@@ -254,7 +248,6 @@ function getThanks(req, res) {
             res.render("thanks", {
                 numberOfSignatures,
                 signature: rows[0].signature,
-                loggedIn: true,
             });
         })
         .catch((err) => {
