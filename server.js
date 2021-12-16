@@ -45,7 +45,11 @@ app.use(authRouter);
 app.use(profileRouter);
 app.use(petitionRouter);
 
-app.listen(
-    process.env.PORT || PORT,
-    console.log(`Petition server listening on port ${PORT}`)
-);
+if (require.main == module) {
+    app.listen(
+        process.env.PORT || PORT,
+        console.log(`Petition server listening on port ${PORT}`)
+    );
+}
+
+module.exports.app = app;
