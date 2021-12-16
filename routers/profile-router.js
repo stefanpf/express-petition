@@ -1,0 +1,152 @@
+const express = require("express");
+const profileRouter = express.Router();
+const db = require("../utils/db");
+const { requireLoggedInUser } = require("../middleware/authorization");
+const { hash } = require("../utils/bc");
+const { checkValidEmail } = require("../utils/helper-functions");
+
+profileRouter
+    .route("/profile")
+    .get(requireLoggedInUser, (req, res) => res.render("profile"))
+    .post((req, res) => {
+        let { age, city, url } = req.body;
+        const userId = req.session.userId;
+        if (!age && !city && !url) {
+            res.redirect("/petition");
+        } else {
+            db.addProfile(userId, age, city, url)
+                .then(() => {
+                    res.redirect("/petition");
+                })
+                .catch((err) => {
+                    console.log("Err in addProfile:", err);
+                    res.render("profile", { profileError: true });
+                });
+        }
+    });
+
+profileRouter
+    .route("/profile/edit")
+    .get(requireLoggedInUser, (req, res) => {
+        const { userId } = req.session;
+        db.getUserProfile(userId)
+            .then(({ rows }) => {
+                const { first, last, email, age, city, url } = rows[0];
+                res.render("edit-profile", {
+                    first,
+                    last,
+                    email,
+                    age,
+                    city,
+                    url,
+                });
+            })
+            .catch((err) => {
+                console.log("Err in getUserProfile:", err);
+                res.render("edit-profile", {
+                    editProfileError: true,
+                });
+            });
+    })
+    .post((req, res) => {
+        const { userId } = req.session;
+        const { first, last, email, password, age, city, url } = req.body;
+        if (checkValidEmail(email)) {
+            if (!password) {
+                db.updateUserWithoutPassword(
+                    userId,
+                    first.trim(),
+                    last.trim(),
+                    email.toLowerCase().trim()
+                )
+                    .then(() => {
+                        return db.updateUserProfile(
+                            userId,
+                            age.trim(),
+                            city.trim(),
+                            url.trim()
+                        );
+                    })
+                    .then(() => {
+                        res.redirect("/thanks");
+                    })
+                    .catch((err) => {
+                        console.log("Err in updateUserWithoutPassword:", err);
+                        res.render("edit-profile", {
+                            editProfileError: true,
+                            first,
+                            last,
+                            email,
+                            password,
+                            age,
+                            city,
+                            url,
+                        });
+                    });
+            } else {
+                hash(password)
+                    .then((hashedPassword) => {
+                        return db.updateUserWithPassword(
+                            userId,
+                            first.trim(),
+                            last.trim(),
+                            email.toLowerCase().trim(),
+                            hashedPassword
+                        );
+                    })
+                    .catch((err) => {
+                        console.log("Err in updateUserWithPassword:", err);
+                        res.render("edit-profile", {
+                            editProfileError: true,
+                            first,
+                            last,
+                            email,
+                            password,
+                            age,
+                            city,
+                            url,
+                        });
+                    })
+                    .then(() => {
+                        return db.updateUserProfile(
+                            userId,
+                            age.trim(),
+                            city.trim(),
+                            url.trim()
+                        );
+                    })
+                    .then(() => {
+                        res.redirect("/thanks");
+                    })
+                    .catch((err) => {
+                        console.log("Err in updateUserProfile:", err);
+                        res.render("edit-profile", {
+                            editProfileError: true,
+                            first,
+                            last,
+                            email,
+                            password,
+                            age,
+                            city,
+                            url,
+                        });
+                    });
+            }
+        } else {
+            res.render("edit-profile", { editProfileError: true });
+        }
+    });
+
+profileRouter.post("/delete-account", requireLoggedInUser, (req, res) => {
+    db.deleteAccount(req.session.userId)
+        .then(() => {
+            req.session = null;
+            res.redirect("/register");
+        })
+        .catch((err) => {
+            console.log("Err in deleteAccount:", err);
+            res.render("edit-profile", { editProfileError: true });
+        });
+});
+
+module.exports = profileRouter;

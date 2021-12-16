@@ -2,10 +2,14 @@ const express = require("express");
 const cookieSession = require("cookie-session");
 const helmet = require("helmet");
 const { engine } = require("express-handlebars");
-const { requireLoggedInUser } = require("./middleware/authorization");
+const {
+    requireLoggedInUser,
+    // requireHasSigned,
+} = require("./middleware/authorization");
 const { logUrl } = require("./utils/helper-functions");
 const routes = require("./utils/handleRoutes");
 const authRouter = require("./routers/auth-router");
+const profileRouter = require("./routers/profile-router");
 const app = express();
 const PORT = 8080;
 
@@ -38,6 +42,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use(authRouter);
+app.use(profileRouter);
 app.use(express.static("./public"));
 app.use(helmet());
 
@@ -45,14 +50,6 @@ app.use(helmet());
 app.get("/", requireLoggedInUser, (req, res) => {
     res.redirect("/petition");
 });
-
-app.route("/profile")
-    .get(requireLoggedInUser, (req, res) => res.render("profile"))
-    .post((req, res) => routes.postProfile(req, res));
-
-app.route("/profile/edit")
-    .get(requireLoggedInUser, (req, res) => routes.getEditProfile(req, res))
-    .post((req, res) => routes.postEditProfile(req, res));
 
 app.route("/petition")
     .get(requireLoggedInUser, (req, res) => {
@@ -90,15 +87,6 @@ app.get("/signers/:city", requireLoggedInUser, (req, res) => {
 
 app.post("/delete-signature", requireLoggedInUser, (req, res) => {
     routes.postDeleteSignature(req, res);
-});
-
-app.post("/delete-account", requireLoggedInUser, (req, res) => {
-    routes.postDeleteAccount(req, res);
-});
-
-app.get("/logout", requireLoggedInUser, (req, res) => {
-    req.session = null;
-    res.redirect("/");
 });
 
 app.listen(

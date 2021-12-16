@@ -1,6 +1,7 @@
 const express = require("express");
 const authRouter = express.Router();
 const db = require("../utils/db");
+const { requireLoggedInUser } = require("../middleware/authorization");
 const { compare, hash } = require("../utils/bc");
 const { checkValidEmail } = require("../utils/helper-functions");
 
@@ -69,8 +70,13 @@ authRouter
             })
             .catch((err) => {
                 console.log("Err in getUserByEmail:", err);
-                res.render("login", { loginError: true });
+                res.render("login", { loggedOut: true, loginError: true });
             });
     });
+
+authRouter.get("/logout", requireLoggedInUser, (req, res) => {
+    req.session = null;
+    res.redirect("/");
+});
 
 module.exports = authRouter;
