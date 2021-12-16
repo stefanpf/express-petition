@@ -5,9 +5,11 @@ const { requireLoggedInUser } = require("../middleware/authorization");
 const { hash } = require("../utils/bc");
 const { checkValidEmail } = require("../utils/helper-functions");
 
+profileRouter.use(requireLoggedInUser);
+
 profileRouter
     .route("/profile")
-    .get(requireLoggedInUser, (req, res) => res.render("profile"))
+    .get((req, res) => res.render("profile"))
     .post((req, res) => {
         let { age, city, url } = req.body;
         const userId = req.session.userId;
@@ -27,7 +29,7 @@ profileRouter
 
 profileRouter
     .route("/profile/edit")
-    .get(requireLoggedInUser, (req, res) => {
+    .get((req, res) => {
         const { userId } = req.session;
         db.getUserProfile(userId)
             .then(({ rows }) => {
@@ -137,7 +139,7 @@ profileRouter
         }
     });
 
-profileRouter.post("/delete-account", requireLoggedInUser, (req, res) => {
+profileRouter.post("/delete-account", (req, res) => {
     db.deleteAccount(req.session.userId)
         .then(() => {
             req.session = null;
