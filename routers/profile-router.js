@@ -9,9 +9,7 @@ profileRouter.use(requireLoggedInUser);
 
 profileRouter
     .route("/profile")
-    .get((req, res) =>
-        res.render("profile", { isForm: true, title: "Add some info" })
-    )
+    .get((req, res) => res.render("profile", { title: "Add some info" }))
     .post((req, res) => {
         let { age, city, url } = req.body;
         const userId = req.session.userId;
@@ -26,7 +24,6 @@ profileRouter
                     console.log("Err in addProfile:", err);
                     res.render("profile", {
                         profileError: true,
-                        isForm: true,
                         title: "Add some info",
                     });
                 });
@@ -47,7 +44,6 @@ profileRouter
                     age,
                     city,
                     url,
-                    isForm: true,
                     title: "Edit your profile",
                 });
             })
@@ -55,7 +51,6 @@ profileRouter
                 console.log("Err in getUserProfile:", err);
                 res.render("edit-profile", {
                     editProfileError: true,
-                    isForm: true,
                     title: "Edit your profile",
                 });
             });
@@ -94,7 +89,6 @@ profileRouter
                             city,
                             url,
                             title: "Edit your profile",
-                            isForm: true,
                         });
                     });
             } else {
@@ -119,7 +113,6 @@ profileRouter
                             age,
                             city,
                             url,
-                            isForm: true,
                             title: "Edit your profile",
                         });
                     })
@@ -145,7 +138,6 @@ profileRouter
                             age,
                             city,
                             url,
-                            isForm: true,
                             title: "Edit your profile",
                         });
                     });
@@ -153,7 +145,6 @@ profileRouter
         } else {
             res.render("edit-profile", {
                 editProfileError: true,
-                isForm: true,
                 title: "Edit your profile",
             });
         }
@@ -169,7 +160,6 @@ profileRouter.post("/delete-account", (req, res) => {
             console.log("Err in deleteAccount:", err);
             res.render("edit-profile", {
                 editProfileError: true,
-                isForm: true,
             });
         });
 });

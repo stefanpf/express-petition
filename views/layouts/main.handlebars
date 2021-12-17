@@ -9,22 +9,19 @@
     <body>
         <header>
             {{#if loggedOut}}{{else}}
-                <p>
+                <div><a href="/">Home</a></div>
+                <div>
                     <a href="/profile/edit">Edit Profile</a>
                     |
                     <a href="/logout" class="logout-link">Logout</a>
-                </p>
+                </div>
             {{/if}}
         </header>
-        {{#if isForm}}
-            <div class="form-wrapper">
-                <div class="form-inner-wrap">
-                    {{{body}}}
-                </div>
+        <div class="content-wrapper">
+            <div class="content-inner-wrap">
+                {{{body}}}
             </div>
-        {{else}}
-            {{{body}}}
-        {{/if}}
+        </div>
         <footer>
             &copy; 2021 MTL Foundation | Background Photo by
             <a href="https://unsplash.com/@clemono">Clem Onojeghuo</a>

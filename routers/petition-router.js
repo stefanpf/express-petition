@@ -11,7 +11,7 @@ petitionRouter
         if (req.session.hasSigned) {
             res.redirect("/thanks");
         } else {
-            res.render("petition", { isForm: true, title: "Add Your Voice!" });
+            res.render("petition", { title: "Add Your Voice!" });
         }
     })
     .post((req, res) => {
@@ -20,7 +20,6 @@ petitionRouter
         if (signature === "") {
             return res.render("petition", {
                 addSignatureError: true,
-                isForm: true,
             });
         }
         db.addSignature(userId, signature)
@@ -36,7 +35,6 @@ petitionRouter
                 console.log("Err in addSignature:", err);
                 res.render("petition", {
                     addSignatureError: true,
-                    isForm: true,
                     title: "Add Your Voice!",
                 });
             });
@@ -96,7 +94,6 @@ petitionRouter.post("/delete-signature", (req, res) => {
             console.log("Err in deleteSignature:", err);
             res.render("edit-profile", {
                 editProfileError: true,
-                isForm: true,
                 title: "Edit your profile",
             });
         });

@@ -17,7 +17,6 @@ authRouter
         } else {
             res.render("register", {
                 loggedOut: true,
-                isForm: true,
                 title: "Register",
             });
         }
@@ -44,14 +43,12 @@ authRouter
                     console.log("Err in addUser:", err);
                     res.render("register", {
                         registrationError: true,
-                        isForm: true,
                         title: "Register",
                     });
                 });
         } else {
             res.render("register", {
                 registrationError: true,
-                isForm: true,
                 title: "Register",
             });
         }
@@ -69,7 +66,6 @@ authRouter
         } else {
             res.render("login", {
                 loggedOut: true,
-                isForm: true,
                 title: "Login",
             });
         }
@@ -109,7 +105,6 @@ authRouter
                 res.render("login", {
                     loggedOut: true,
                     loginError: true,
-                    isForm: true,
                     title: "Login",
                 });
             });

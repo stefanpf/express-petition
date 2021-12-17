@@ -10,10 +10,11 @@ body {
 
 header {
     background-color: rgba(255, 255, 255, 0.7);
-    text-align: right;
+    display: flex;
+    justify-content: space-between;
 }
 
-header p {
+header div {
     padding: 20px;
     font-size: 1.5em;
 }
@@ -22,14 +23,14 @@ header a {
     margin: 0em 1.2em;
 }
 
-.form-wrapper {
+.content-wrapper {
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-top: 30px;
+    margin: 30px 0px;
 }
 
-.form-inner-wrap {
+.content-inner-wrap {
     background-color: rgba(255, 255, 255, 0.7);
     width: 50%;
     display: flex;
@@ -109,4 +110,20 @@ canvas {
     width: 500px;
     height: 250px;
     align-self: center;
+}
+
+.signature-img {
+    max-width: 500px;
+    max-height: 250px;
+    align-self: center;
+}
+
+footer {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px 30px;
+    font-size: 1em;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    overflow-y: hidden;
 }
