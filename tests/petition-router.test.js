@@ -50,13 +50,15 @@ test("POST /petition succeeds with good input", () => {
         .expect("location", "/thanks");
 });
 
-// Route handles empty input correctly but test doesn't work
 test("POST /petition fails with bad input", () => {
     cookieSession.mockSessionOnce({ userId: 1 });
-    addSignature.mockResolvedValueOnce({
-        rows: [{ id: 1 }],
-    });
-    return supertest(app).post("/petition").send("").expect(200);
+    return supertest(app)
+        .post("/petition")
+        .send("signature=")
+        .then((res) => {
+            expect(res.statusCode).toBe(200);
+            expect(res.text).toContain("Uh oh, there was a problem");
+        });
 });
 
 test("GET /thanks functional when logged in and has signed", () => {
