@@ -8,6 +8,20 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+header {
+    background-color: rgba(255, 255, 255, 0.7);
+    text-align: right;
+}
+
+header p {
+    padding: 20px;
+    font-size: 1.5em;
+}
+
+header a {
+    margin: 0em 1.2em;
+}
+
 .form-wrapper {
     display: flex;
     justify-content: center;
@@ -22,15 +36,17 @@ body {
     flex-direction: column;
     border-radius: 10px;
     text-align: center;
+    padding: 30px;
 }
 
 .form-description {
-    margin: 10px 10px;
+    width: 70%;
+    align-self: center;
     font-size: 1.2em;
 }
 
 .form-description p {
-    margin: 10px 10px;
+    margin: 10px;
 }
 
 .auth-form {
@@ -40,9 +56,7 @@ body {
     justify-content: center;
 }
 
-.auth-form input[type="text"],
-input[type="email"],
-input[type="password"] {
+.auth-form input {
     width: 50%;
     border-radius: 5px;
     font-size: 1.3em;
@@ -60,8 +74,39 @@ input[type="password"] {
     align-self: center;
 }
 
+.auth-form button[type="submit"] {
+    background-color: rgba(4, 212, 38, 1);
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.auth-form button[type="submit"]:hover {
+    background-color: rgba(4, 212, 38, 0.8);
+}
+
+.delete-form button {
+    margin-top: 20px;
+    height: 1.7em;
+    width: 30%;
+    font-size: 1.2em;
+    align-self: center;
+}
+
+.delete-form button[type="submit"] {
+    background-color: rgb(230, 7, 7);
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.delete-form button[type="submit"]:hover {
+    background-color: rgba(230, 7, 7, 0.8);
+}
+
 canvas {
-    border: 3px solid antiquewhite;
+    border: 3px solid rgb(0, 0, 0);
     border-radius: 5px;
     margin: 20px 0;
+    width: 500px;
+    height: 250px;
+    align-self: center;
 }

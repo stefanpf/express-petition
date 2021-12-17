@@ -9,7 +9,11 @@
     <body>
         <header>
             {{#if loggedOut}}{{else}}
-                <a href="/logout">Logout</a>
+                <p>
+                    <a href="/profile/edit">Edit Profile</a>
+                    |
+                    <a href="/logout" class="logout-link">Logout</a>
+                </p>
             {{/if}}
         </header>
         {{#if isForm}}
@@ -22,7 +26,11 @@
             {{{body}}}
         {{/if}}
         <footer>
-            &copy; 2021 MTL Foundation
+            &copy; 2021 MTL Foundation | Background Photo by
+            <a href="https://unsplash.com/@clemono">Clem Onojeghuo</a>
+            on
+            <a href="https://unsplash.com/">Unsplash</a>
+
         </footer>
     </body>
 </html>

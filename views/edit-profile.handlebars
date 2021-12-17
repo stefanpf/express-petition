@@ -1,4 +1,4 @@
-<form action="" method="post" id="edit-profile-form">
+<form action="" method="post" id="edit-profile-form" class="auth-form">
     <label for="firstName">First Name</label>
     <input type="text" name="first" id="firstName" value="{{first}}" /><br />
     <label for="lastName">Last Name</label>
@@ -16,9 +16,10 @@
     <button type="submit">Save</button>
 </form>
 {{#if editProfileError}}<h2>Uh oh, there was a problem, please try again...</h2>{{/if}}
-<form action="/delete-signature" method="post">
+<p>!! Danger Zone !!</p>
+<form action="/delete-signature" method="post" class="delete-form">
     <button type="submit">DELETE SIGNATURE</button>
 </form>
-<form action="/delete-account" method="post">
+<form action="/delete-account" method="post" class="delete-form">
     <button type="submit">DELETE ACCOUNT</button>
 </form>

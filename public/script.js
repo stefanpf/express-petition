@@ -17,7 +17,7 @@
 
     canvas.addEventListener("mousemove", (evt) => {
         if (drawing) {
-            context.strokeStyle = "white";
+            context.strokeStyle = "black";
             context.lineWidth = 3;
             context.beginPath();
             context.moveTo(coordinates[0], coordinates[1]);
