@@ -4,39 +4,58 @@
 }
 
 body {
-    background-color: hotpink;
+    background-image: url("img/bg-01-big.jpg");
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .form-wrapper {
     display: flex;
     justify-content: center;
     width: 100%;
+    margin-top: 30px;
 }
 
 .form-inner-wrap {
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 50%;
     display: flex;
     flex-direction: column;
-    justify-content: right;
+    border-radius: 10px;
+    text-align: center;
 }
 
-#petition-form {
-    margin-top: 50px;
+.form-description {
+    margin: 10px 10px;
+    font-size: 1.2em;
+}
+
+.form-description p {
+    margin: 10px 10px;
+}
+
+.auth-form {
+    margin: 50px 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-#petition-form input[type="text"] {
+.auth-form input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 50%;
     border-radius: 5px;
     font-size: 1.3em;
     height: 2em;
     margin: 10px 10px;
     padding: 5px 10px;
+    align-self: center;
 }
 
-#petition-form button {
+.auth-form button {
+    margin-top: 20px;
     height: 2em;
-    width: 70%;
+    width: 50%;
     font-size: 2em;
     align-self: center;
 }

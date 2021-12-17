@@ -11,7 +11,7 @@ petitionRouter
         if (req.session.hasSigned) {
             res.redirect("/thanks");
         } else {
-            res.render("petition", { isForm: true });
+            res.render("petition", { isForm: true, title: "Add Your Voice!" });
         }
     })
     .post((req, res) => {
@@ -37,6 +37,7 @@ petitionRouter
                 res.render("petition", {
                     addSignatureError: true,
                     isForm: true,
+                    title: "Add Your Voice!",
                 });
             });
     });
@@ -56,11 +57,12 @@ petitionRouter.get("/thanks", (req, res) => {
                 res.render("thanks", {
                     numberOfSignatures,
                     signature: rows[0].signature,
+                    title: "Thank you!",
                 });
             })
             .catch((err) => {
                 console.log("Err in getSignature", err);
-                res.render("thanks");
+                res.render("thanks", { title: "Thank you!" });
             });
     } else {
         res.redirect("/petition");
@@ -95,6 +97,7 @@ petitionRouter.post("/delete-signature", (req, res) => {
             res.render("edit-profile", {
                 editProfileError: true,
                 isForm: true,
+                title: "Edit your profile",
             });
         });
 });
@@ -121,6 +124,7 @@ function getSigners(req, res) {
             res.render("signers", {
                 signers,
                 numberOfSignatures: rows[0].count,
+                title: "Who else has signed?",
             });
         })
         .catch((err) => console.log("Err in getNumberOfSignatures:", err));

@@ -9,7 +9,9 @@ profileRouter.use(requireLoggedInUser);
 
 profileRouter
     .route("/profile")
-    .get((req, res) => res.render("profile", { isForm: true }))
+    .get((req, res) =>
+        res.render("profile", { isForm: true, title: "Add some info" })
+    )
     .post((req, res) => {
         let { age, city, url } = req.body;
         const userId = req.session.userId;
@@ -22,7 +24,11 @@ profileRouter
                 })
                 .catch((err) => {
                     console.log("Err in addProfile:", err);
-                    res.render("profile", { profileError: true, isForm: true });
+                    res.render("profile", {
+                        profileError: true,
+                        isForm: true,
+                        title: "Add some info",
+                    });
                 });
         }
     });
@@ -42,6 +48,7 @@ profileRouter
                     city,
                     url,
                     isForm: true,
+                    title: "Edit your profile",
                 });
             })
             .catch((err) => {
@@ -49,6 +56,7 @@ profileRouter
                 res.render("edit-profile", {
                     editProfileError: true,
                     isForm: true,
+                    title: "Edit your profile",
                 });
             });
     })
@@ -85,6 +93,8 @@ profileRouter
                             age,
                             city,
                             url,
+                            title: "Edit your profile",
+                            isForm: true,
                         });
                     });
             } else {
@@ -109,6 +119,8 @@ profileRouter
                             age,
                             city,
                             url,
+                            isForm: true,
+                            title: "Edit your profile",
                         });
                     })
                     .then(() => {
@@ -133,11 +145,17 @@ profileRouter
                             age,
                             city,
                             url,
+                            isForm: true,
+                            title: "Edit your profile",
                         });
                     });
             }
         } else {
-            res.render("edit-profile", { editProfileError: true });
+            res.render("edit-profile", {
+                editProfileError: true,
+                isForm: true,
+                title: "Edit your profile",
+            });
         }
     });
 

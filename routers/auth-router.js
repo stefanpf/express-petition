@@ -15,7 +15,11 @@ authRouter
                 res.redirect("/thanks");
             }
         } else {
-            res.render("register", { loggedOut: true, isForm: true });
+            res.render("register", {
+                loggedOut: true,
+                isForm: true,
+                title: "Register",
+            });
         }
     })
     .post((req, res) => {
@@ -41,10 +45,15 @@ authRouter
                     res.render("register", {
                         registrationError: true,
                         isForm: true,
+                        title: "Register",
                     });
                 });
         } else {
-            res.render("register", { registrationError: true, isForm: true });
+            res.render("register", {
+                registrationError: true,
+                isForm: true,
+                title: "Register",
+            });
         }
     });
 
@@ -58,7 +67,11 @@ authRouter
                 res.redirect("/thanks");
             }
         } else {
-            res.render("login", { loggedOut: true, isForm: true });
+            res.render("login", {
+                loggedOut: true,
+                isForm: true,
+                title: "Login",
+            });
         }
     })
     .post((req, res) => {
@@ -97,6 +110,7 @@ authRouter
                     loggedOut: true,
                     loginError: true,
                     isForm: true,
+                    title: "Login",
                 });
             });
     });

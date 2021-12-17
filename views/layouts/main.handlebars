@@ -4,7 +4,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="/style.css" />
-        <title>Petition</title>
+        <title>MAKE THEM LISTEN! {{#if title}}- {{title}}{{/if}}</title>
     </head>
     <body>
         <header>
@@ -15,14 +15,6 @@
         {{#if isForm}}
             <div class="form-wrapper">
                 <div class="form-inner-wrap">
-                    <div class="register-description">
-                        <p>What do we want? Everything! When do we want it? Now!</p>
-                        <ul>
-                            <li>More energy!</li>
-                            <li>More Gute Laune!</li>
-                            <li>Less boredom!</li>
-                        </ul>
-                    </div>
                     {{{body}}}
                 </div>
             </div>
@@ -30,7 +22,7 @@
             {{{body}}}
         {{/if}}
         <footer>
-            &copy; 2021 Cool Industries, Inc.
+            &copy; 2021 MTL Foundation
         </footer>
     </body>
 </html>
