@@ -9,7 +9,7 @@ profileRouter.use(requireLoggedInUser);
 
 profileRouter
     .route("/profile")
-    .get((req, res) => res.render("profile"))
+    .get((req, res) => res.render("profile", { isForm: true }))
     .post((req, res) => {
         let { age, city, url } = req.body;
         const userId = req.session.userId;
@@ -22,7 +22,7 @@ profileRouter
                 })
                 .catch((err) => {
                     console.log("Err in addProfile:", err);
-                    res.render("profile", { profileError: true });
+                    res.render("profile", { profileError: true, isForm: true });
                 });
         }
     });
@@ -41,12 +41,14 @@ profileRouter
                     age,
                     city,
                     url,
+                    isForm: true,
                 });
             })
             .catch((err) => {
                 console.log("Err in getUserProfile:", err);
                 res.render("edit-profile", {
                     editProfileError: true,
+                    isForm: true,
                 });
             });
     })
@@ -147,7 +149,10 @@ profileRouter.post("/delete-account", (req, res) => {
         })
         .catch((err) => {
             console.log("Err in deleteAccount:", err);
-            res.render("edit-profile", { editProfileError: true });
+            res.render("edit-profile", {
+                editProfileError: true,
+                isForm: true,
+            });
         });
 });
 

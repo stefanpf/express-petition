@@ -12,7 +12,23 @@
                 <a href="/logout">Logout</a>
             {{/if}}
         </header>
-        {{{body}}}
+        {{#if isForm}}
+            <div class="form-wrapper">
+                <div class="form-inner-wrap">
+                    <div class="register-description">
+                        <p>What do we want? Everything! When do we want it? Now!</p>
+                        <ul>
+                            <li>More energy!</li>
+                            <li>More Gute Laune!</li>
+                            <li>Less boredom!</li>
+                        </ul>
+                    </div>
+                    {{{body}}}
+                </div>
+            </div>
+        {{else}}
+            {{{body}}}
+        {{/if}}
         <footer>
             &copy; 2021 Cool Industries, Inc.
         </footer>

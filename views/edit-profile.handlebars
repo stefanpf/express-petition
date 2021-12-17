@@ -1,39 +1,24 @@
-<div class="form-wrapper">
-    <div class="form-inner-wrap">
-        <div class="register-description">
-            <p>Edit Profile</p>
-        </div>
-        <form action="" method="post" id="edit-profile-form">
-            <label for="firstName">First Name</label>
-            <input
-                type="text"
-                name="first"
-                id="firstName"
-                value="{{first}}"
-            /><br />
-            <label for="lastName">Last Name</label>
-            <input type="text" name="last" id="lastName" value="{{last}}" /><br
-            />
-            <label for="email">Email Address</label>
-            <input type="email" name="email" id="email" value="{{email}}" /><br
-            />
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" /><br />
-            <label for="age">Age</label>
-            <input type="number" name="age" id="age" value="{{age}}" /><br />
-            <label for="city">City</label>
-            <input type="text" name="city" id="city" value="{{city}}" /><br />
-            <label for="homepage">Homepage</label>
-            <input type="text" name="url" id="homepage" value="{{url}}" /><br />
-            <button type="submit">Save</button>
-        </form>
-        {{#if editProfileError}}<h2>Uh oh, there was a problem, please try
-                again...</h2>{{/if}}
-    </div>
-    <form action="/delete-signature" method="post">
-        <button type="submit">DELETE SIGNATURE</button>
-    </form>
-    <form action="/delete-account" method="post">
-        <button type="submit">DELETE ACCOUNT</button>
-    </form>
-</div>
+<form action="" method="post" id="edit-profile-form">
+    <label for="firstName">First Name</label>
+    <input type="text" name="first" id="firstName" value="{{first}}" /><br />
+    <label for="lastName">Last Name</label>
+    <input type="text" name="last" id="lastName" value="{{last}}" /><br />
+    <label for="email">Email Address</label>
+    <input type="email" name="email" id="email" value="{{email}}" /><br />
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" /><br />
+    <label for="age">Age</label>
+    <input type="number" name="age" id="age" value="{{age}}" /><br />
+    <label for="city">City</label>
+    <input type="text" name="city" id="city" value="{{city}}" /><br />
+    <label for="homepage">Homepage</label>
+    <input type="text" name="url" id="homepage" value="{{url}}" /><br />
+    <button type="submit">Save</button>
+</form>
+{{#if editProfileError}}<h2>Uh oh, there was a problem, please try again...</h2>{{/if}}
+<form action="/delete-signature" method="post">
+    <button type="submit">DELETE SIGNATURE</button>
+</form>
+<form action="/delete-account" method="post">
+    <button type="submit">DELETE ACCOUNT</button>
+</form>

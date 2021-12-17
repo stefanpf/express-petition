@@ -15,7 +15,7 @@ authRouter
                 res.redirect("/thanks");
             }
         } else {
-            res.render("register", { loggedOut: true });
+            res.render("register", { loggedOut: true, isForm: true });
         }
     })
     .post((req, res) => {
@@ -38,10 +38,13 @@ authRouter
                 })
                 .catch((err) => {
                     console.log("Err in addUser:", err);
-                    res.render("register", { registrationError: true });
+                    res.render("register", {
+                        registrationError: true,
+                        isForm: true,
+                    });
                 });
         } else {
-            res.render("register", { registrationError: true });
+            res.render("register", { registrationError: true, isForm: true });
         }
     });
 
@@ -55,7 +58,7 @@ authRouter
                 res.redirect("/thanks");
             }
         } else {
-            res.render("login", { loggedOut: true });
+            res.render("login", { loggedOut: true, isForm: true });
         }
     })
     .post((req, res) => {
@@ -90,7 +93,11 @@ authRouter
             })
             .catch((err) => {
                 console.log("Err in getUserByEmail:", err);
-                res.render("login", { loggedOut: true, loginError: true });
+                res.render("login", {
+                    loggedOut: true,
+                    loginError: true,
+                    isForm: true,
+                });
             });
     });
 

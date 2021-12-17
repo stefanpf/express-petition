@@ -1,23 +1,10 @@
-<div class="form-wrapper">
-    <div class="form-inner-wrap">
-        <div class="register-description">
-            <p>What do we want? Everything! When do we want it? Now!</p>
-            <ul>
-                <li>More energy!</li>
-                <li>More Gute Laune!</li>
-                <li>Less boredom!</li>
-            </ul>
-        </div>
-        <form action="" method="post" id="register-form">
-            <label for="age">Age</label>
-            <input type="number" name="age" id="age" /><br />
-            <label for="city">City</label>
-            <input type="text" name="city" id="city" /><br />
-            <label for="homepage">Homepage</label>
-            <input type="text" name="url" id="homepage" /><br />
-            <button type="submit">Save</button>
-        </form>
-        {{#if profileError}}<h2>Uh oh, there was a problem, please try again...</h2>{{/if}}
-    </div>
-
-</div>
+<form action="" method="post" id="register-form">
+    <label for="age">Age</label>
+    <input type="number" name="age" id="age" /><br />
+    <label for="city">City</label>
+    <input type="text" name="city" id="city" /><br />
+    <label for="homepage">Homepage</label>
+    <input type="text" name="url" id="homepage" /><br />
+    <button type="submit">Save</button>
+</form>
+{{#if profileError}}<h2>Uh oh, there was a problem, please try again...</h2>{{/if}}

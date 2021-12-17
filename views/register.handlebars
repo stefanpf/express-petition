@@ -1,28 +1,11 @@
-<div class="form-wrapper">
-    <div class="form-inner-wrap">
-        <div class="register-description">
-            <p>What do we want? Everything! When do we want it? Now!</p>
-            <ul>
-                <li>More energy!</li>
-                <li>More Gute Laune!</li>
-                <li>Less boredom!</li>
-            </ul>
-        </div>
-        <form action="" method="post" id="register-form">
-            <label for="firstName">First Name</label>
-            <input type="text" name="firstName" id="firstName" required /><br />
-            <label for="lastName">Last Name</label>
-            <input type="text" name="lastName" id="lastName" required /><br />
-            <label for="email">Email Address</label>
-            <input type="email" name="email" id="email" required /><br />
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" required /><br
-            />
-            <button type="submit">Register Account</button>
-        </form>
-        <p>Already have an account? <a href="/login">Login here!</a></p>
-        {{#if registrationError}}<h2>Uh oh, there was a problem, please try
-                again...</h2>{{/if}}
-    </div>
-
-</div>
+<form action="" method="post" id="register-form">
+    <label for="firstName">First Name</label>
+    <input type="text" name="firstName" id="firstName" required /><br />
+    <label for="lastName">Last Name</label>
+    <input type="text" name="lastName" id="lastName" required /><br />
+    <label for="email">Email Address</label>
+    <input type="email" name="email" id="email" required /><br />
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" required /><br />
+    <button type="submit">Register Account</button>
+</form>

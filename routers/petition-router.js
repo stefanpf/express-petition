@@ -11,14 +11,17 @@ petitionRouter
         if (req.session.hasSigned) {
             res.redirect("/thanks");
         } else {
-            res.render("petition");
+            res.render("petition", { isForm: true });
         }
     })
     .post((req, res) => {
         const { signature } = req.body;
         const { userId } = req.session;
         if (signature === "") {
-            return res.render("petition", { addSignatureError: true });
+            return res.render("petition", {
+                addSignatureError: true,
+                isForm: true,
+            });
         }
         db.addSignature(userId, signature)
             .then(({ rows }) => {
@@ -31,7 +34,10 @@ petitionRouter
             })
             .catch((err) => {
                 console.log("Err in addSignature:", err);
-                res.render("petition", { addSignatureError: true });
+                res.render("petition", {
+                    addSignatureError: true,
+                    isForm: true,
+                });
             });
     });
 
@@ -86,7 +92,10 @@ petitionRouter.post("/delete-signature", (req, res) => {
         })
         .catch((err) => {
             console.log("Err in deleteSignature:", err);
-            res.render("edit-profile", { editProfileError: true });
+            res.render("edit-profile", {
+                editProfileError: true,
+                isForm: true,
+            });
         });
 });
 
