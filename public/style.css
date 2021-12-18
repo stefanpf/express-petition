@@ -120,6 +120,48 @@ header a {
     background-color: rgba(230, 7, 7, 0.8);
 }
 
+table {
+    margin: 20px 0;
+    align-self: center;
+    table-layout: fixed;
+    width: 70%;
+    /* border: 3px solid purple; */
+    border-collapse: collapse;
+}
+
+thead th:nth-child(1) {
+    width: 35%;
+}
+
+thead th:nth-child(2) {
+    width: 10%;
+}
+
+thead th:nth-child(3) {
+    width: 20%;
+}
+
+thead th:nth-child(4) {
+    width: 35%;
+}
+
+tbody td {
+    text-align: center;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: rgba(192, 190, 190, 0.7);
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgba(241, 236, 236, 0.692);
+}
+
+th,
+td {
+    padding: 5px;
+}
+
 canvas {
     border: 3px solid rgb(0, 0, 0);
     border-radius: 5px;

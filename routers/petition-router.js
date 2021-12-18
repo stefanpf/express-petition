@@ -120,6 +120,7 @@ function getSigners(req, res) {
         .then(({ rows }) => {
             res.render("signers", {
                 signers,
+                location: req.params.city || null,
                 numberOfSignatures: rows[0].count,
                 title: "Who else has signed?",
             });
