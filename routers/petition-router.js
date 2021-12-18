@@ -105,6 +105,9 @@ petitionRouter.get("/", (req, res) => {
 
 function getSigners(req, res) {
     let signers;
+    const location = req.params.city
+        ? req.params.city.charAt(0).toUpperCase() + req.params.city.slice(1)
+        : null;
 
     db.getSigners(req.params.city)
         .then(({ rows }) => {
@@ -120,7 +123,7 @@ function getSigners(req, res) {
         .then(({ rows }) => {
             res.render("signers", {
                 signers,
-                location: req.params.city || null,
+                location,
                 numberOfSignatures: rows[0].count,
                 title: "Who else has signed?",
             });
