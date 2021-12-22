@@ -1,34 +1,151 @@
+@font-face {
+    font-family: "Avenir";
+    src: url("/fonts/Avenir-Roman.eot");
+    src: local("Avenir Roman"), local("Avenir-Roman"),
+        url("/fonts/Avenir-Roman.eot?#iefix") format("embedded-opentype"),
+        url("/fonts/Avenir-Roman.woff2") format("woff2"),
+        url("/fonts/Avenir-Roman.woff") format("woff"),
+        url("/fonts/Avenir-Roman.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir";
+    src: url("/fonts/Avenir-Light.eot");
+    src: local("Avenir Light"), local("Avenir-Light"),
+        url("/fonts/Avenir-Light.eot?#iefix") format("embedded-opentype"),
+        url("/fonts/Avenir-Light.woff2") format("woff2"),
+        url("/fonts/Avenir-Light.woff") format("woff"),
+        url("/fonts/Avenir-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir Book";
+    src: url("/fonts/Avenir-BookOblique.eot");
+    src: local("Avenir Book Oblique"), local("Avenir-BookOblique"),
+        url("/fonts/Avenir-BookOblique.eot?#iefix") format("embedded-opentype"),
+        url("/fonts/Avenir-BookOblique.woff2") format("woff2"),
+        url("/fonts/Avenir-BookOblique.woff") format("woff"),
+        url("/fonts/Avenir-BookOblique.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir Black Oblique";
+    src: url("/fonts/Avenir-BlackOblique.eot");
+    src: local("Avenir Black Oblique"), local("Avenir-BlackOblique"),
+        url("/fonts/Avenir-BlackOblique.eot?#iefix") format("embedded-opentype"),
+        url("/fonts/Avenir-BlackOblique.woff2") format("woff2"),
+        url("/fonts/Avenir-BlackOblique.woff") format("woff"),
+        url("/fonts/Avenir-BlackOblique.ttf") format("truetype");
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir";
+    src: url("/fonts/Avenir-Heavy.eot");
+    src: local("Avenir Heavy"), local("Avenir-Heavy"),
+        url("/fonts/Avenir-Heavy.eot?#iefix") format("embedded-opentype"),
+        url("/fonts/Avenir-Heavy.woff2") format("woff2"),
+        url("/fonts/Avenir-Heavy.woff") format("woff"),
+        url("/fonts/Avenir-Heavy.ttf") format("truetype");
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir";
+    src: url("/fonts/Avenir-HeavyOblique.eot");
+    src: local("Avenir Heavy Oblique"), local("Avenir-HeavyOblique"),
+        url("/fonts/Avenir-HeavyOblique.eot?#iefix") format("embedded-opentype"),
+        url("/fonts/Avenir-HeavyOblique.woff2") format("woff2"),
+        url("/fonts/Avenir-HeavyOblique.woff") format("woff"),
+        url("/fonts/Avenir-HeavyOblique.ttf") format("truetype");
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir";
+    src: url("/fonts/Avenir-MediumOblique.eot");
+    src: local("Avenir Medium Oblique"), local("Avenir-MediumOblique"),
+        url("/fonts/Avenir-MediumOblique.eot?#iefix")
+            format("embedded-opentype"),
+        url("/fonts/Avenir-MediumOblique.woff2") format("woff2"),
+        url("/fonts/Avenir-MediumOblique.woff") format("woff"),
+        url("/fonts/Avenir-MediumOblique.ttf") format("truetype");
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir";
+    src: url("/fonts/Avenir-LightOblique.eot");
+    src: local("Avenir Light Oblique"), local("Avenir-LightOblique"),
+        url("/fonts/Avenir-LightOblique.eot?#iefix") format("embedded-opentype"),
+        url("/fonts/Avenir-LightOblique.woff2") format("woff2"),
+        url("/fonts/Avenir-LightOblique.woff") format("woff"),
+        url("/fonts/Avenir-LightOblique.ttf") format("truetype");
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir Book";
+    src: url("/fonts/Avenir-Book.eot");
+    src: local("Avenir Book"), local("Avenir-Book"),
+        url("/fonts/Avenir-Book.eot?#iefix") format("embedded-opentype"),
+        url("/fonts/Avenir-Book.woff2") format("woff2"),
+        url("/fonts/Avenir-Book.woff") format("woff"),
+        url("/fonts/Avenir-Book.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir";
+    src: url("/fonts/Avenir-Black.eot");
+    src: local("Avenir Black"), local("Avenir-Black"),
+        url("/fonts/Avenir-Black.eot?#iefix") format("embedded-opentype"),
+        url("/fonts/Avenir-Black.woff2") format("woff2"),
+        url("/fonts/Avenir-Black.woff") format("woff"),
+        url("/fonts/Avenir-Black.ttf") format("truetype");
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir";
+    src: url("/fonts/Avenir-Oblique.eot");
+    src: local("Avenir Oblique"), local("Avenir-Oblique"),
+        url("/fonts/Avenir-Oblique.eot?#iefix") format("embedded-opentype"),
+        url("/fonts/Avenir-Oblique.woff2") format("woff2"),
+        url("/fonts/Avenir-Oblique.woff") format("woff"),
+        url("/fonts/Avenir-Oblique.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir";
+    src: url("/fonts/Avenir-Medium.eot");
+    src: local("Avenir Medium"), local("Avenir-Medium"),
+        url("/fonts/Avenir-Medium.eot?#iefix") format("embedded-opentype"),
+        url("/fonts/Avenir-Medium.woff2") format("woff2"),
+        url("/fonts/Avenir-Medium.woff") format("woff"),
+        url("/fonts/Avenir-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     box-sizing: border-box;
-}
-
-@font-face {
-    font-family: "Avenir";
-    src: url("/fonts/Avenir-Medium.woff") format("woff")
-        url("/fonts/Avenir-Medium.woff2") format("woff2");
-}
-
-@font-face {
-    font-family: "Avenir";
-    src: url("/fonts/Avenir-Heavy.woff") format("woff")
-        url("/fonts/Avenir-Heavy.woff2") format("woff2");
-    font-weight: bold;
-}
-
-@font-face {
-    font-family: "Avenir";
-    src: url("/fonts/Avenir-MediumOblique.woff") format("woff"),
-        url("/fonts/Avenir-MediumOblique.woff2") format("woff2");
-    font-style: italic;
-}
-
-@font-face {
-    font-family: "Avenir";
-    src: url("/fonts/Avenir-HeavyOblique.woff") format("woff"),
-        url("/fonts/Avenir-HeavyOblique.woff2") format("woff2");
-    font-weight: bold;
-    font-style: italic;
 }
 
 html,
@@ -44,13 +161,23 @@ body {
             rgba(47, 17, 228, 0) 99.83%
         ),
         url("img/bg-02-big.jpg");
-    font-family: Avenir, sans-serif;
-    display: flex;
-    flex-direction: column;
+    font-family: "Avenir", sans-serif;
+    color: white;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+strong {
+    color: #f2da03;
 }
 
 header {
-    background-color: rgba(255, 255, 255, 0.7);
+    height: 90px;
+    border: 2px solid red;
     display: flex;
     justify-content: space-between;
 }
@@ -60,35 +187,88 @@ header div {
     font-size: 1.5em;
 }
 
-.logo {
+/* .logo {
     margin: 0;
 }
 
 .logo img {
     height: 100px;
     border-radius: 10px;
-}
+} */
 
 header a {
     margin: 0em 1.2em;
 }
 
 .content-wrapper {
-    flex: 1 0 auto;
     display: flex;
     justify-content: center;
     width: 100%;
-    margin: 30px 0px;
 }
 
 .content-inner-wrap {
-    background-color: rgba(255, 255, 255, 0.7);
-    width: 50%;
+    width: 52%;
     display: flex;
     flex-direction: column;
-    border-radius: 10px;
+    align-items: center;
+}
+
+.content-inner-wrap h1 {
     text-align: center;
-    padding: 30px;
+    font-weight: 900;
+    font-size: 60px;
+    line-height: 71px;
+}
+
+.text-description {
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 27px;
+    width: 700px;
+    margin: 72px 0px;
+}
+
+.progress-label {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 25px;
+}
+
+.progress-bar {
+    height: 36px;
+    width: 831px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.progress-current {
+    height: 36px;
+    width: 692px;
+    background-color: #1fb499;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.progress-text {
+    padding-top: 5px;
+    padding-left: 13.5px;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 25px;
+    letter-spacing: 0.08em;
+}
+
+.button-cta {
+    margin-top: 70px;
+    width: 330px;
+    height: 50px;
+    background-color: #d42aa5;
+    padding: 8px 75px 8px 75px;
+    box-shadow: 0px 2px 4px rgba(36, 18, 147, 0.2);
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 33px;
+    letter-spacing: 0.08em;
 }
 
 .form-description {
@@ -209,11 +389,4 @@ canvas {
     max-width: 500px;
     max-height: 250px;
     align-self: center;
-}
-
-footer {
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 20px 30px;
-    font-size: 1em;
-    flex-shrink: 0;
 }
