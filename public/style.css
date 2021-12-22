@@ -3,14 +3,48 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: "Avenir";
+    src: url("/fonts/Avenir-Medium.woff") format("woff")
+        url("/fonts/Avenir-Medium.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Avenir";
+    src: url("/fonts/Avenir-Heavy.woff") format("woff")
+        url("/fonts/Avenir-Heavy.woff2") format("woff2");
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "Avenir";
+    src: url("/fonts/Avenir-MediumOblique.woff") format("woff"),
+        url("/fonts/Avenir-MediumOblique.woff2") format("woff2");
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir";
+    src: url("/fonts/Avenir-HeavyOblique.woff") format("woff"),
+        url("/fonts/Avenir-HeavyOblique.woff2") format("woff2");
+    font-weight: bold;
+    font-style: italic;
+}
+
 html,
 body {
     height: 100%;
 }
 
 body {
-    background-image: url("img/bg-01-big.jpg");
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background: linear-gradient(
+            360deg,
+            #241293 -1.97%,
+            rgba(77, 54, 218, 0.624371) 36.27%,
+            rgba(47, 17, 228, 0) 99.83%
+        ),
+        url("img/bg-02-big.jpg");
+    font-family: Avenir, sans-serif;
     display: flex;
     flex-direction: column;
 }
