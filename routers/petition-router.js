@@ -100,7 +100,11 @@ petitionRouter.post("/delete-signature", (req, res) => {
 });
 
 petitionRouter.get("/", (req, res) => {
-    res.redirect("/petition");
+    if (req.session.userId) {
+        res.redirect("/thanks");
+    } else {
+        res.render("home", { loggedOut: true });
+    }
 });
 
 function getSigners(req, res) {
