@@ -1,13 +1,14 @@
-<div class="form-description">
-    <h1>Make Them Listen!</h1>
-    <p>Log in here:</p>
+{{> main-heading}}
+<div class="form-container">
+    {{> progress-bar-small}}
+    <div class="form-heading">Login</div>
+    <form action="" method="post" id="login-form" class="auth-form">
+        <label for="email">Email Address</label>
+        <input type="text" name="email" id="email" required /><br />
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required /><br />
+        <button type="submit" class="button-cta">Login</button>
+    </form>
+    <div class="option-login">Don't have an account yet? <a href="/register">Register here!</a></div>
 </div>
-<form action="" method="post" id="login-form" class="auth-form">
-    <label for="email">Email Address</label>
-    <input type="text" name="email" id="email" required /><br />
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required /><br />
-    <button type="submit">Login</button>
-</form>
-<p>Don't have an account yet? <a href="/register">Register here!</a></p>
 {{#if loginError}}<h2>Uh oh, there was a problem, please try again...</h2>{{/if}}
