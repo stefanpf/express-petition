@@ -3,5 +3,3 @@ node_modules
 package-lock.json
 secrets.json
 .env
-fonts
-img
