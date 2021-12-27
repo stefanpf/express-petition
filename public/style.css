@@ -150,7 +150,7 @@
 
 html,
 body {
-    height: 100%;
+    min-height: 100%;
 }
 
 body {
@@ -180,6 +180,10 @@ a {
 
 strong {
     color: #f2da03;
+}
+
+input {
+    all: unset;
 }
 
 button {
@@ -238,6 +242,7 @@ header {
     font-weight: 900;
     font-size: 48px;
     line-height: 59px;
+    margin-bottom: 32px;
 }
 
 .text-description {
@@ -249,7 +254,6 @@ header {
 }
 
 .button-cta {
-    margin: 70px 0px 24px 0px;
     width: 330px;
     height: 50px;
     background-color: #d42aa5;
@@ -260,9 +264,14 @@ header {
     font-size: 24px;
     line-height: 33px;
     letter-spacing: 0.08em;
+    align-self: center;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.sign-button {
+    margin: 70px 0px 24px 0px;
 }
 
 .option-login {
@@ -297,19 +306,36 @@ header {
 }
 
 .auth-form {
+    width: 100%;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 24px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 .auth-form input {
-    width: 50%;
-    border-radius: 5px;
+    background-color: #fff;
+    width: 96%;
+    border-radius: 8px;
     font-size: 1.3em;
     height: 2em;
-    margin: 10px 10px;
+    margin: 14px 24px 24px 24px;
     padding: 5px 10px;
     align-self: center;
+}
+
+.auth-form input:last-of-type {
+    margin-bottom: 0;
+}
+
+.auth-form input:focus {
+    outline: 1px solid #241293;
+}
+
+.auth-form button {
+    margin: 48px 24px 24px 24px;
 }
 
 .delete-form button {
