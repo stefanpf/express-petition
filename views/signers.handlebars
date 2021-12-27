@@ -1,34 +1,36 @@
-{{#if location}}
-    <h1>These legends have signed in {{location}}:</h1>
-{{else}}
-    <h1>These {{numberOfSignatures}} legends have already signed:</h1>
-{{/if}}
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Location</th>
-            <th>Website</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#signers}}
+<div class="form-container">
+    {{#if location}}
+        <h2>These legends have signed in {{location}}:</h2>
+    {{else}}
+        <h2>These {{numberOfSignatures}} legends have already signed:</h2>
+    {{/if}}
+    <table>
+        <thead>
             <tr>
-                <td>{{this.first}} {{this.last}}</td>
-                <td>{{this.age}}</td>
-                <td><a href="/signers/{{this.city}}">{{this.city}}</a></td>
-                <td><a href="{{this.url}}">{{this.url}}</a></td>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Location</th>
+                <th>Website</th>
             </tr>
-        {{/signers}}
+        </thead>
+        <tbody>
+            {{#signers}}
+                <tr>
+                    <td>{{this.first}} {{this.last}}</td>
+                    <td>{{this.age}}</td>
+                    <td><a href="/signers/{{this.city}}">{{this.city}}</a></td>
+                    <td><a href="{{this.url}}">{{this.url}}</a></td>
+                </tr>
+            {{/signers}}
 
-    </tbody>
-</table>
-{{#if location}}
-    <p><a href="/signers">Back To Overview</a></p>
-{{else}}
-    <p>
-        Total number of signers:
-        {{numberOfSignatures}}
-    </p>
-{{/if}}
+        </tbody>
+    </table>
+    {{#if location}}
+        <p><a href="/signers">Back To Overview</a></p>
+    {{else}}
+        <p>
+            Total number of signers:
+            {{numberOfSignatures}}
+        </p>
+    {{/if}}
+</div>

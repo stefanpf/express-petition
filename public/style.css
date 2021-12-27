@@ -306,7 +306,7 @@ header {
     margin: 24px 0px;
 }
 
-.auth-form {
+form {
     width: 100%;
     font-weight: 800;
     font-size: 18px;
@@ -316,7 +316,7 @@ header {
     justify-content: center;
 }
 
-.auth-form input {
+form input {
     background-color: #fff;
     width: 96%;
     border-radius: 8px;
@@ -327,35 +327,17 @@ header {
     align-self: center;
 }
 
-.auth-form input:last-of-type {
+form input:last-of-type {
     margin-bottom: 0;
 }
 
-.auth-form input:focus {
+form input:focus {
     outline: 1px solid #241293;
 }
 
 .auth-form button {
     margin: 48px 24px 24px 24px;
     width: 100%;
-}
-
-.delete-form button {
-    margin-top: 20px;
-    height: 1.7em;
-    width: 30%;
-    font-size: 1.2em;
-    align-self: center;
-}
-
-.delete-form button[type="submit"] {
-    background-color: rgb(230, 7, 7);
-    cursor: pointer;
-    border-radius: 10px;
-}
-
-.delete-form button[type="submit"]:hover {
-    background-color: rgba(230, 7, 7, 0.8);
 }
 
 /* PROGRESS BARS */
