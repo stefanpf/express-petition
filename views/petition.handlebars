@@ -2,10 +2,10 @@
 <div class="form-container">
     {{> progress-bar-small}}
     <div class="form-heading">Sign here:</div>
-    <form action="" method="post" id="petition-form" class="auth-form">
+    <form action="" method="post" id="petition-form">
         <input type="hidden" name="signature" id="signature" required /><br />
         <canvas id="canv" width="500" height="250"></canvas>
-        <button type="submit" class="button-cta">Sign now</button>
+        <button type="submit" class="button-cta auth-button">Sign now</button>
     </form>
     {{#if addSignatureError}}<h2>Uh oh, there was a problem, please try again...</h2>{{/if}}
 </div>

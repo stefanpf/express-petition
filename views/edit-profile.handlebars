@@ -1,6 +1,6 @@
 <div class="form-container">
     <div class="form-heading">Edit your profile</div>
-    <form action="" method="post" id="edit-profile-form" class="auth-form">
+    <form action="" method="post" id="edit-profile-form">
         <label for="firstName">First Name</label>
         <input type="text" name="first" id="firstName" value="{{first}}" /><br
         />
@@ -16,16 +16,16 @@
         <input type="text" name="city" id="city" value="{{city}}" /><br />
         <label for="homepage">Homepage</label>
         <input type="text" name="url" id="homepage" value="{{url}}" /><br />
-        <button type="submit" class="button-cta">Save</button>
+        <button type="submit" class="button-cta auth-button">Save</button>
     </form>
     {{#if editProfileError}}<h2>Uh oh, there was a problem, please try again...</h2>{{/if}}
 </div>
 <div class="form-container">
     <div class="form-heading">DANGER ZONE</div>
-    <form action="/delete-signature" method="post" class="auth-form">
-        <button type="submit" class="button-cta">DELETE SIGNATURE</button>
+    <form action="/delete-signature" method="post">
+        <button type="submit" class="button-cta auth-button">DELETE SIGNATURE</button>
     </form>
-    <form action="/delete-account" method="post" class="auth-form">
-        <button type="submit" class="button-cta">DELETE ACCOUNT</button>
+    <form action="/delete-account" method="post">
+        <button type="submit" class="button-cta auth-button">DELETE ACCOUNT</button>
     </form>
 </div>

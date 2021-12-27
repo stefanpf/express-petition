@@ -335,10 +335,14 @@ form input:focus {
     outline: 1px solid #241293;
 }
 
-.auth-form button {
+.auth-button {
     margin: 48px 24px 24px 24px;
     width: 100%;
 }
+/* .auth-form button {
+    margin: 48px 24px 24px 24px;
+    width: 100%;
+} */
 
 /* PROGRESS BARS */
 /* ------------- */
