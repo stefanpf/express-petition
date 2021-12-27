@@ -11,7 +11,10 @@ petitionRouter
         if (req.session.hasSigned) {
             res.redirect("/thanks");
         } else {
-            res.render("petition", { title: "Add Your Voice!" });
+            res.render("petition", {
+                title: "Add Your Voice!",
+                loggedOut: true,
+            });
         }
     })
     .post((req, res) => {

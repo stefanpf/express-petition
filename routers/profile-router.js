@@ -9,7 +9,9 @@ profileRouter.use(requireLoggedInUser);
 
 profileRouter
     .route("/profile")
-    .get((req, res) => res.render("profile", { title: "Add some info" }))
+    .get((req, res) =>
+        res.render("profile", { title: "Add some info", loggedOut: true })
+    )
     .post((req, res) => {
         let { age, city, url } = req.body;
         const userId = req.session.userId;
