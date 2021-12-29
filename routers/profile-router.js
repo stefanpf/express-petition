@@ -3,15 +3,40 @@ const profileRouter = express.Router();
 const db = require("../utils/db");
 const { requireLoggedInUser } = require("../middleware/authorization");
 const { hash } = require("../utils/bc");
-const { checkValidEmail } = require("../utils/helper-functions");
+const {
+    checkValidEmail,
+    getNumberOfSignaturesAndPercentage,
+} = require("../utils/helper-functions");
 
 profileRouter.use(requireLoggedInUser);
 
 profileRouter
     .route("/profile")
-    .get((req, res) =>
-        res.render("profile", { title: "Add some info", loggedOut: true })
-    )
+    .get((req, res) => {
+        let petitionStats;
+        getNumberOfSignaturesAndPercentage()
+            .then((stats) => {
+                petitionStats = stats;
+                res.render("profile", {
+                    title: "Add some info",
+                    loggedOut: true,
+                    ...petitionStats,
+                });
+            })
+            .catch((err) => {
+                console.log(
+                    "Error in getNumberOfSignaturesAndPercentage:",
+                    err
+                );
+                res.render("profile", {
+                    title: "Add some info",
+                    loggedOut: true,
+                    GOAL_NUMBER: 50,
+                    actualNumber: 25,
+                    percentage: 50,
+                });
+            });
+    })
     .post((req, res) => {
         let { age, city, url } = req.body;
         const userId = req.session.userId;

@@ -1,3 +1,5 @@
+const { getNumberOfSignatures } = require("./db");
+
 function logUrl(req, res, next) {
     console.log(`${req.method}\t${req.url}`);
     next();
@@ -9,7 +11,32 @@ function checkValidEmail(str) {
     );
 }
 
+function getNumberOfSignaturesAndPercentage() {
+    const GOAL_NUMBER = 30;
+    let actualNumber;
+
+    return getNumberOfSignatures()
+        .then(({ rows }) => {
+            actualNumber = parseInt(rows[0].count);
+            return {
+                GOAL_NUMBER,
+                actualNumber,
+                percentage: Math.round((actualNumber / GOAL_NUMBER) * 100),
+            };
+        })
+        .catch((err) => {
+            console.log("Error in getNumberOfSignatures:", err);
+            actualNumber = 17;
+            return {
+                GOAL_NUMBER,
+                actualNumber,
+                percentage: Math.round((actualNumber / GOAL_NUMBER) * 100),
+            };
+        });
+}
+
 module.exports = {
     logUrl,
     checkValidEmail,
+    getNumberOfSignaturesAndPercentage,
 };

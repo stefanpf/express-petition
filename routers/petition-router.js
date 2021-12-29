@@ -2,6 +2,11 @@ const express = require("express");
 const petitionRouter = express.Router();
 const db = require("../utils/db");
 const { requireLoggedInUser } = require("../middleware/authorization");
+const {
+    getNumberOfSignaturesAndPercentage,
+} = require("../utils/helper-functions");
+
+let petitionStats;
 
 petitionRouter.use(requireLoggedInUser);
 
@@ -14,6 +19,7 @@ petitionRouter
             res.render("petition", {
                 title: "Add Your Voice!",
                 loggedOut: true,
+                ...petitionStats,
             });
         }
     })
@@ -23,6 +29,8 @@ petitionRouter
         if (signature === "") {
             return res.render("petition", {
                 addSignatureError: true,
+                loggedOut: true,
+                ...petitionStats,
             });
         }
         db.addSignature(userId, signature)
@@ -106,7 +114,23 @@ petitionRouter.get("/", (req, res) => {
     if (req.session.userId) {
         res.redirect("/thanks");
     } else {
-        res.render("home", { loggedOut: true });
+        getNumberOfSignaturesAndPercentage()
+            .then((stats) => {
+                petitionStats = stats;
+                res.render("home", { loggedOut: true, ...petitionStats });
+            })
+            .catch((err) => {
+                console.log(
+                    "Error in getNumberOfSignaturesAndPercentage:",
+                    err
+                );
+                res.render("home", {
+                    loggedOut: true,
+                    GOAL_NUMBER: 50,
+                    actualNumber: 25,
+                    percentage: 50,
+                });
+            });
     }
 });
 

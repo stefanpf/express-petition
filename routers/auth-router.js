@@ -3,7 +3,10 @@ const authRouter = express.Router();
 const db = require("../utils/db");
 const { requireLoggedInUser } = require("../middleware/authorization");
 const { compare, hash } = require("../utils/bc");
-const { checkValidEmail } = require("../utils/helper-functions");
+const {
+    checkValidEmail,
+    getNumberOfSignaturesAndPercentage,
+} = require("../utils/helper-functions");
 
 authRouter
     .route("/register")
@@ -15,10 +18,29 @@ authRouter
                 res.redirect("/thanks");
             }
         } else {
-            res.render("register", {
-                loggedOut: true,
-                title: "Register",
-            });
+            let petitionStats;
+            getNumberOfSignaturesAndPercentage()
+                .then((stats) => {
+                    petitionStats = stats;
+                    res.render("register", {
+                        loggedOut: true,
+                        title: "Register",
+                        ...petitionStats,
+                    });
+                })
+                .catch((err) => {
+                    console.log(
+                        "Error in getNumberOfSignaturesAndPercentage:",
+                        err
+                    );
+                    res.render("register", {
+                        loggedOut: true,
+                        title: "Register",
+                        GOAL_NUMBER: 50,
+                        actualNumber: 25,
+                        percentage: 50,
+                    });
+                });
         }
     })
     .post((req, res) => {
@@ -64,10 +86,29 @@ authRouter
                 res.redirect("/thanks");
             }
         } else {
-            res.render("login", {
-                loggedOut: true,
-                title: "Login",
-            });
+            let petitionStats;
+            getNumberOfSignaturesAndPercentage()
+                .then((stats) => {
+                    petitionStats = stats;
+                    res.render("login", {
+                        loggedOut: true,
+                        title: "Login",
+                        ...petitionStats,
+                    });
+                })
+                .catch((err) => {
+                    console.log(
+                        "Error in getNumberOfSignaturesAndPercentage:",
+                        err
+                    );
+                    res.render("login", {
+                        loggedOut: true,
+                        title: "Login",
+                        GOAL_NUMBER: 50,
+                        actualNumber: 25,
+                        percentage: 50,
+                    });
+                });
         }
     })
     .post((req, res) => {
