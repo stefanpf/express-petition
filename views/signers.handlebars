@@ -1,4 +1,4 @@
-<div class="form-container">
+<div class="content-display signers-container">
     {{#if location}}
         <h2>These legends have signed in {{location}}:</h2>
     {{else}}
@@ -26,11 +26,11 @@
         </tbody>
     </table>
     {{#if location}}
-        <p><a href="/signers">Back To Overview</a></p>
+        <div><a href="/signers">Back To Overview</a></div>
     {{else}}
-        <p>
+        <div>
             Total number of signers:
             {{numberOfSignatures}}
-        </p>
+        </div>
     {{/if}}
 </div>

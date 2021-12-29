@@ -1,10 +1,12 @@
-<h1>🎉 Thanks for signing this petition!</h1>
-<p>
-    Check out who else has
-    <a href="/signers">signed the petition</a>
-</p>
-{{#if signature}}<img src="{{signature}}" class="signature-img" />{{/if}}
+<div class="content-display signers-container">
+    <h1>🎉 Thanks for signing this petition!</h1>
+    <div>
+        Check out who else has
+        <a href="/signers">signed the petition</a>
+    </div>
+    {{#if signature}}<img src="{{signature}}" class="signature-img" />{{/if}}
 
-{{#if numberOfSignatures}}
-    <p>Total number of signatures: {{numberOfSignatures}}</p>
-{{/if}}
+    {{#if numberOfSignatures}}
+        <div>Total number of signatures: {{numberOfSignatures}}</div>
+    {{/if}}
+</div>

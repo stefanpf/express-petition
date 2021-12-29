@@ -207,6 +207,7 @@ header {
 .logo {
     width: 134px;
     height: 33px;
+    font-weight: 900;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -218,10 +219,6 @@ header {
     border-radius: 50%;
     background: linear-gradient(180deg, #85faec 0%, #1b7267 100%);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.logo-text {
-    font-weight: 900;
 }
 
 /* WRAPPERS */
@@ -237,6 +234,23 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.content-inner-wrap a {
+    color: #241293;
+}
+
+.content-display {
+    width: 100%;
+    background-color: #eae8f3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px 24px 32px;
+    margin-bottom: 48px;
+    border-radius: 8px;
+    color: #1b105c;
 }
 
 .main-heading {
@@ -271,6 +285,26 @@ header {
     align-items: center;
 }
 
+.signers-container {
+    font-weight: 800;
+    font-size: 1.2em;
+    line-height: 1.4em;
+}
+
+.signers-container div {
+    align-self: center;
+    padding: 24px 0px;
+}
+
+.signers-container h1 {
+    margin-top: 24px;
+}
+
+.signers-container h2 {
+    align-self: center;
+    margin: 18px 0px;
+}
+
 .sign-button {
     margin: 70px 0px 24px 0px;
 }
@@ -286,18 +320,6 @@ header {
 /* ----- */
 .form-container {
     width: 610px;
-    background-color: #eae8f3;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 24px 24px 32px;
-    margin-bottom: 48px;
-    border-radius: 8px;
-    color: #1b105c;
-}
-
-.form-container a {
-    color: #241293;
 }
 
 .form-heading {
@@ -408,8 +430,8 @@ table {
     align-self: center;
     table-layout: fixed;
     width: 70%;
-    /* border: 3px solid purple; */
     border-collapse: collapse;
+    color: #1b105c;
 }
 
 thead th:nth-child(1) {
@@ -461,4 +483,6 @@ canvas {
     max-width: 500px;
     max-height: 250px;
     align-self: center;
+    background-color: #fff;
+    border-radius: 8px;
 }
