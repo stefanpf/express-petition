@@ -195,7 +195,11 @@ button {
 /* ------------- */
 header {
     height: 90px;
-    padding: 37px 0px 0px 46px;
+    padding: 37px 46px 0px 46px;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 33px;
+    letter-spacing: 0.08em;
     display: flex;
     justify-content: space-between;
 }
@@ -217,10 +221,7 @@ header {
 }
 
 .logo-text {
-    font-size: 24px;
     font-weight: 900;
-    line-height: 33px;
-    letter-spacing: 0.08em;
 }
 
 /* WRAPPERS */
